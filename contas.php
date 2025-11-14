@@ -20,7 +20,7 @@
       
             <!-- Tabela -->
             <div class="overflow-x-auto">
-                <table class="w-full text-left border border-gray-200">
+                <table class="w-full text-left border border-gray-200" id="tabela-contas">
                   <thead class="bg-emerald-800 text-white">
                     <tr>
                       <th class="px-4 py-2">ID</th>
@@ -106,4 +106,5 @@
     </div>
   </div>
   <script src="<?=URL?>assets/js/script.js"></script>
+  <script src="<?=URL?>assets/js/contas.js"></script>
 <?php require_once './pages/footer.php';?>

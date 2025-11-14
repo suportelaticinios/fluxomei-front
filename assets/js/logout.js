@@ -4,9 +4,13 @@ const btnLogout = document.getElementById("logout");
 function logout ()
 {
     localStorage.removeItem("token");
-    window.location.href("http://192.168.2.2:8082/fluxomei-front/login.html");
+    window.location.href = "http://192.168.2.2:8082/fluxomei-front/";
 }
 
 btnLogout.addEventListener('click', function (){
-    logout();
+
+    if (confirm("Deseja sair do sistema"))
+    {
+        logout();
+    }
 });
