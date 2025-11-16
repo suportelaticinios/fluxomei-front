@@ -25,9 +25,8 @@
         <div>
           <label class="block text-sm font-medium text-gray-700">Plano</label>
           <select id="idPlano" class="mt-1 w-full border rounded p-2">
-            <option value="1">Plano Básico</option>
+            <option value="1">Plano Gratuíto</option>
             <option value="2">Plano Pro</option>
-            <option value="3">Plano Premium</option>
           </select>
         </div>
 
@@ -90,6 +89,8 @@
   <script src="<?=URL?>assets/js/jquerymask.js"></script>
   <script>
     // máscara do campo cpf/cnpj
+    $('#cpfCnpj').mask('000.000.000-00');
+    
     const radios = document.querySelectorAll("input[name='tipo']");    
     const CPFCNPJ = document.getElementById('cpfCnpj');
     const formCadastro = document.getElementById('formCadastro');

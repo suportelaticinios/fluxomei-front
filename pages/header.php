@@ -17,7 +17,7 @@
             </div>
             <!-- MENU -->
             <nav class="p-4">
-              <a href="<?=URL?>index" class="block py-2 px-3 rounded hover:bg-emerald-50 text-gray-700">Home</a>
+              <a href="<?=URL?>home" class="block py-2 px-3 rounded hover:bg-emerald-50 text-gray-700">Home</a>
               <a href="<?=URL?>contas" class="block py-2 px-3 rounded hover:bg-emerald-50 text-gray-700">Contas</a>
               <a href="<?=URL?>entradas" class="block py-2 px-3 rounded hover:bg-emerald-50 text-gray-700">Entradas</a>
               <a href="<?=URL?>despesas" class="block py-2 px-3 rounded hover:bg-emerald-50 text-gray-700">Despesas</a>

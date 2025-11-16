@@ -1,7 +1,8 @@
 const token = localStorage.getItem("token");
+const URLBASE = "http://localhost/fluxomei-front/";
 
 if (!token)
 {
     // se não tiver token volta para o login
-    window.location.href = "http://192.168.2.2:8082/fluxomei-front/login.html";
+    window.location.href = URLBASE + "login.html";
 }
