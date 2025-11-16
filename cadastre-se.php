@@ -19,7 +19,7 @@
       <h1 class="text-2xl font-bold text-emerald-600 mb-2 text-center">Crie sua conta</h1>
       <p class="text-gray-600 mb-6 text-center">Gerencie seu financeiro com facilidade</p>
 
-      <form id="formCadastro" onsubmit="event.preventDefault(); alert('Cadastro enviado!');" class="space-y-4">
+      <form id="formCadastro" class="space-y-4">
 
         <!-- Plano -->
         <div>
@@ -92,10 +92,19 @@
     // máscara do campo cpf/cnpj
     const radios = document.querySelectorAll("input[name='tipo']");    
     const CPFCNPJ = document.getElementById('cpfCnpj');
+    const formCadastro = document.getElementById('formCadastro');
+
+    formCadastro.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        let plano = document.getElementById('plano:selected').value;
+
+        cadastrarSe([plano])
+    })
 
     function aplicarMascara ()
     {
-        const tipo = document.querySelector("input[name='tipo']:checked").value;
+        const tipo = document.querySelector("input[name='tipo']:checked");
 
         if (tipo == 'pf')
         {
@@ -103,6 +112,21 @@
         } else {
             $('#cpfCnpj').mask('00.000.000/0000-00');
         }
+    }
+
+    function cadastrarSe (dados)
+    {
+        let token = localStorage.getItem('token');
+
+        fetch('http://192.168.2.2:8082/api-fluxomei/auth/login', {
+            method: 'POST',
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                'Content-Type': "application/json",
+                'User-Agent': "front-fluxomei"
+        },
+        body: JSON.stringify({dados})
+    });
     }
 
     radios.forEach(radio => {
