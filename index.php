@@ -57,8 +57,8 @@
 
       <!-- Menu -->
       <div class="hidden md:flex gap-2 text-gray-700 font-medium">
-        <a href="<?=URL?>login?>" class="hover:bg-gray-300 px-3 py-2 bg-gray-200 rounded-md">Login</a>
-        <a href="<?=URL?>cadastre-se?>" class="hover:bg-emerald-700 px-3 py-2 bg-emerald-600 text-white rounded-md">Cadastre-se</a>
+        <a href="<?=URL?>login" class="hover:bg-gray-300 px-3 py-2 bg-gray-200 rounded-md">Login</a>
+        <a href="<?=URL?>cadastre-se" class="hover:bg-emerald-700 px-3 py-2 bg-emerald-600 text-white rounded-md">Cadastre-se</a>
       </div>
 
       <!-- Menu Mobile -->
@@ -126,7 +126,7 @@
       <div class="bg-white p-8 rounded-xl shadow-lg text-center animate-fadeIn flex flex-col justify-start">
         <span class="flex w-12 h-12 rounded-full bg-emerald-600 text-white text-md font-bold justify-center items-center self-center">1</span>
         <h2 class="mt-2 text-lg font-bold">Faça login</h2>
-        <p class="text-gray-600 mt-3">Crie uma conta e depois faço login na plataforma, caso já tenha uma, apenas efetue o login.</p>
+        <p class="text-gray-600 mt-3">Crie uma conta e depois faça login na plataforma, caso já tenha uma, apenas efetue o login.</p>
       </div>
 
       <!-- PASSO 2 -->
@@ -209,25 +209,38 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center">
 
-      <!-- Card -->
+      <!-- Plano Grátis -->
       <div class="bg-white p-8 rounded-xl shadow-lg text-center animate-fadeIn">
         <h4 class="text-xl font-semibold">Gratuíto</h4>
         <p class="text-4xl font-bold mt-2">R$0<span class="text-lg text-gray-600">/mês</span></p>
         <p class="text-gray-600 mt-3">5 Entradas</p>
         <p class="text-gray-600">5 Despesas</p>
         <p class="text-gray-600 text-sm">Recursos básicos</p>
-        <button class="mt-6 bg-emerald-600 text-white px-6 py-2 w-full rounded-lg hover:bg-emerald-700">Escolher</button>
+        <button class="mt-6 bg-emerald-600 text-white px-6 py-2 w-full rounded-lg hover:bg-emerald-700">
+          <a class="block" href="<?=URL?>cadastre-se?plano=1" target="_blank" rel="noopener noreferrer">Escolher</a>
+        </button>
       </div>
 
-      <div class="bg-white p-8 rounded-xl shadow-lg text-center animate-fadeIn">
-        <h4 class="text-xl font-semibold">Pro</h4>
-        <p class="text-4xl font-bold mt-2">R$40<span class="text-lg text-gray-600">/mês</span></p>
-        <p class="text-gray-600 mt-3">5 usuários</p>
-        <p class="text-gray-600 text-sm">Todos os recursos</p>
-        <button class="mt-6 bg-emerald-600 text-white px-6 py-2 w-full rounded-lg hover:bg-emerald-700">Escolher</button>
+      <!-- Plano Pro Recomendado -->
+      <div class="relative bg-white p-8 rounded-xl shadow-xl text-center border-2 border-emerald-500 animate-fadeIn scale-[1.02]">
+        
+        <!-- Badge Recomendado -->
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white px-4 py-1 rounded-full text-sm shadow">
+          Recomendado
+        </span>
+
+        <h4 class="text-xl font-semibold mt-2">Pro</h4>
+        <p class="text-4xl font-bold mt-2">R$29,90<span class="text-lg text-gray-600">/mês</span></p>
+        <p class="text-gray-600 mt-3">Entradas ilimitadas</p>
+        <p class="text-gray-600">Despesas ilimitadas</p>
+        <p class="text-gray-600">Todos os recursos</p>
+        <button class="mt-6 bg-emerald-600 text-white px-6 py-2 w-full rounded-lg hover:bg-emerald-700">
+          <a class="block" href="<?=URL?>cadastre-se?plano=2" target="_blank" rel="noopener noreferrer">Escolher</a>
+        </button>
       </div>
 
     </div>
+
   </section>
 
   <!-- TESTEMUNHOS -->

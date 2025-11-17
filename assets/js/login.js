@@ -8,6 +8,8 @@ btnLogin.addEventListener('click', function (e) {
 
 async function fazerLogin ()
 {
+    document.getElementById("loadingScreen").classList.remove("hidden"); // exibindo load de carregamento
+
     const email = document.getElementById('email').value;
     const senha = document.getElementById('senha').value;
 
@@ -22,17 +24,19 @@ async function fazerLogin ()
 
     const data = await resposta.json();
 
+    document.getElementById("loadingScreen").classList.add("hidden"); // escondendo loading de carregamento
+
     if (resposta.ok && data.token)
     {
         // salvar o token no navegador
         localStorage.setItem("token", data.token);
 
         // redirecionar para área protegida
-        window.location.href = "index.php";
+        window.location.href = "home.php";
         return;
     } else {
-        console.log(data);
-        alert(data.erro);
+        // console.log(data);
+        showToast("error", "Erro!", data.message);
         return;
     }
 } 
