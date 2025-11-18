@@ -25,6 +25,9 @@ async function carregarInfoHome () {
         document.getElementById('totalEntradas').innerHTML = toBR(dados.totalEntradas);
         document.getElementById('totalDespesas').innerHTML = toBR(dados.totalDespesas);
         document.getElementById('saldoAtual').innerHTML = toBR(dados.saldoAtual);
+
+        // ultimas movimentações
+        ultimasEntradas(dados.ultimasEntradas);
     } 
     catch (erro) {
       console.error("Erro ao carregar gráfico:", erro);
@@ -114,6 +117,21 @@ function toBR (valor)
         style: 'currency',
         currency: 'BRL'
       });
+}
+
+function ultimasEntradas(dados)
+{
+    let ul = document.getElementById('ultimasEntradas');
+
+    for (dados of d)
+    {
+        ul.innerHTML += '<li class="flex justify-between border-b py-2">'+
+                            '<span>'+ d.CATEGORIA+' '+
+                            '<small class="text-xs text-gray-500 ml-1">'+ d.DATA +'</small>'+
+                            '</span>'+
+                            '<strong>'+ toBR(d.VALOR)+'</strong>'+
+                        '</li>';
+    }
 }
 
 // --- ANIMAÇÃO AO CARREGAR ---

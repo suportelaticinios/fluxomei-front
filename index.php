@@ -107,7 +107,7 @@
 
         <div class="flex justify-center order-2 md:order-1">
           <img 
-            src="<?=URL?>assets/img/relatorios.jpeg?>"
+            src="<?=URL?>assets/img/dashboard.jpeg?>"
             class="rounded-lg shadow-lg border w-full max-w-2xl"
             alt="Sistema"
           />
@@ -158,7 +158,7 @@
 
     <div class="flex justify-center order-2 md:order-1">
       <img 
-        src="<?=URL?>assets/img/dashboard.jpeg?>"
+        src="<?=URL?>assets/img/relatorios.jpeg?>"
         class="rounded-lg shadow w-full max-w-lg"
         alt="Dashboard"
       />

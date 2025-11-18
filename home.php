@@ -43,7 +43,7 @@
         <div class="grid grid-cols-2 gap-4">
           <div>
             <h4 class="text-sm font-medium text-gray-600">Entradas</h4>
-            <ul class="mt-2 space-y-2">
+            <ul class="mt-2 space-y-2" id="ultimasEntradas">
               <li class="flex justify-between border-b py-2">
                 <span>Mensalidade 
                   <small class="text-xs text-gray-500 ml-1">01/11/2025</small>
