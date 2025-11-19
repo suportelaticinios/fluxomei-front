@@ -26,8 +26,9 @@ async function carregarInfoHome () {
         document.getElementById('totalDespesas').innerHTML = toBR(dados.totalDespesas);
         document.getElementById('saldoAtual').innerHTML = toBR(dados.saldoAtual);
 
-        // ultimas movimentações
+        // ultimas movimentações - Entradas e Despesas
         ultimasEntradas(dados.ultimasEntradas);
+        ultimasDespesas(dados.ultimasDespesas);
     } 
     catch (erro) {
       console.error("Erro ao carregar gráfico:", erro);
@@ -122,8 +123,25 @@ function toBR (valor)
 function ultimasEntradas(dados)
 {
     let ul = document.getElementById('ultimasEntradas');
+    console.log(dados);
 
-    for (dados of d)
+    for (let d of dados)
+    {
+        ul.innerHTML += '<li class="flex justify-between border-b py-2">'+
+                            '<span>'+ d.CATEGORIA+' '+
+                            '<small class="text-xs text-gray-500 ml-1">'+ d.DATA +'</small>'+
+                            '</span>'+
+                            '<strong>'+ toBR(d.VALOR)+'</strong>'+
+                        '</li>';
+    }
+}
+
+function ultimasDespesas(dados)
+{
+    let ul = document.getElementById('ultimasDespesas');
+    console.log(dados);
+
+    for (let d of dados)
     {
         ul.innerHTML += '<li class="flex justify-between border-b py-2">'+
                             '<span>'+ d.CATEGORIA+' '+

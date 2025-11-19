@@ -44,24 +44,24 @@
           <div>
             <h4 class="text-sm font-medium text-gray-600">Entradas</h4>
             <ul class="mt-2 space-y-2" id="ultimasEntradas">
-              <li class="flex justify-between border-b py-2">
+              <!-- <li class="flex justify-between border-b py-2">
                 <span>Mensalidade 
                   <small class="text-xs text-gray-500 ml-1">01/11/2025</small>
                 </span>
                 <strong>R$ 1.000,00</strong>
-              </li>
+              </li> -->
             </ul>
           </div>
 
           <div>
             <h4 class="text-sm font-medium text-gray-600">Despesas</h4>
-            <ul class="mt-2 space-y-2">
-              <li class="flex justify-between border-b py-2">
+            <ul class="mt-2 space-y-2" id="ultimasDespesas">
+              <!-- <li class="flex justify-between border-b py-2">
                 <span>Mensalidade 
                   <small class="text-xs text-gray-500 ml-1">01/11/2025</small>
                 </span>
                 <strong>R$ 1.000,00</strong>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>

@@ -1,14 +1,23 @@
 
 // modal
 const modal = document.getElementById("entryModal");
-const openBtn = document.getElementById("openModalBtn");
 const closeBtn = document.getElementById("closeModalBtn");
 const cancelBtn = document.getElementById("cancelBtn");
 
 // Abrir modal
-openBtn.addEventListener("click", () => {
-    modal.classList.remove("hidden");
-});
+document.addEventListener("click", function (e) {
+  const openBtn = e.target.closest(".openModalBtn"); 
+
+  if (!openBtn) return;
+
+  // sempre limpar os forms antes de abri o modal
+  const form = document.querySelector("#entryModal form");
+  form.reset();
+
+  document.getElementById("titulo-modal").innerHTML = openBtn.dataset.titulo;
+  modal.classList.remove("hidden");
+})
+
 // Fechar modal
 function closeModal() {
     modal.classList.add("hidden");
