@@ -1,9 +1,12 @@
 var tbContas = document.getElementById('tabela-contas').querySelector('tbody');
 var modo = 'criar';
 var idConta = null;
+var listaContas = [];
 const url =`${URLAPI}conta/`;
 const formConta = document.getElementById('formConta');
 const select = document.getElementById("idBanco");
+const pesquisarConta = document.getElementById("pesquisarConta");
+const btnExportarContas = document.getElementById("btnExportarContas");
 
 document.addEventListener("click", function(e) {
     const btn = e.target.closest(".editarConta");
@@ -15,6 +18,17 @@ document.addEventListener("click", function(e) {
     idConta = btn.dataset.id;
 
     buscarContaId(idConta);
+})
+
+pesquisarConta.addEventListener("keyup", function (e) {
+    buscarContas({
+        coluna: document.getElementById("coluna").value,
+        pesquisa: pesquisarConta.value
+    })
+})
+
+btnExportarContas.addEventListener("click", function (e) {
+    exportExcel(listaContas, "contas.xlsx");
 })
 
 // mascaras
@@ -73,7 +87,6 @@ function buscarBancos ()
         return response.json(); // converte o retorno para JSON
     })
     .then(data => {
-        console.log("Sucesso: ", data);
         const bancos = data;
 
         bancos.forEach (banco => {
@@ -93,10 +106,21 @@ function buscarBancos ()
 }
 
 // buscar todas as contas do usuário
-function buscarContas ()
+function buscarContas (filtros = {})
 {
+    // remove filtros vazios
+    const params = new URLSearchParams();
+
+    for (const chave in filtros) {
+        if (filtros[chave] !== "" && filtros[chave] !== null && filtros[chave] !== undefined) {
+            params.append(chave, filtros[chave]);
+        }
+    }
+
+    const urlFinal = url + "listar?" + params.toString();
+
     // faz uma requisição a api para gerar relatório mensal
-    fetch(url + `listar`, {
+    fetch(urlFinal, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}` // token no header
@@ -114,6 +138,7 @@ function buscarContas ()
     .then(data => {
         // console.log("Sucesso: ", data);
         montarTabela(data);
+        listaContas = data;
     })
     .catch(error => {
         console.log("Error: ", error.message);
