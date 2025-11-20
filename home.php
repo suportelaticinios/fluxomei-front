@@ -79,8 +79,8 @@
 
       <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition mt-6">
         <h2 class="text-lg font-semibold mb-4">Resumo Rápido</h2>
-        <div class="text-sm text-gray-600">Entradas: R$ 1.000,00</div>
-        <div class="text-sm text-gray-600">Despesas: R$ 2.000,00</div>
+        <div class="text-sm text-gray-600" id="resumoEntradas">Entradas: <span>R$ 1.000,00</span></div>
+        <div class="text-sm text-gray-600" id="resumoDespesas">Despesas: <span>R$ 2.000,00</span></div>
       </div>
     </div>
 

@@ -66,3 +66,12 @@ function showToast(type, title, message) {
     toast.classList.add("hidden");
   }, 5000);
 }
+
+// função para exportar dados
+function exportExcel(dados, nome = "dados.xlsx") {
+    const worksheet = XLSX.utils.json_to_sheet(dados);
+    const workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Dados");
+    XLSX.writeFile(workbook, nome);
+}

@@ -16,23 +16,32 @@
                 <h2 class="text-lg font-semibold mb-4">Entradas</h2>
                 <div class="space-x-2">
                     <button data-titulo="Nova Entrada" data-modo="criar" id="openModalBtn" class="bg-emerald-800 openModalBtn text-white px-4 py-2 rounded hover:bg-emerald-700">Nova entrada</button>
-                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">Exportar CSV</button>
+                    <button id="btnExportarEntradas" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">Exportar CSV</button>
                 </div>
             </div>
       
             <!-- Filtros -->
             <div class="flex flex-wrap gap-4 mb-4">
+                <div>
+                  <label class="block text-sm text-gray-600 mb-1">Selecione o campo</label>
+                  <select name="" id="coluna" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-700">
+                    <option value="banco">Banco</option>
+                    <option value="conta">Conta</option>
+                    <option value="categoria">Categoria</option>
+                    <option value="descricao">Descrição</option>
+                  </select>
+                </div>
                 <div class="flex-1 min-w-[200px]">
                   <label class="block text-sm text-gray-600 mb-1">Pesquisar</label>
-                  <input type="text" placeholder="Buscar por descrição, banco, conta..." class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-700">
+                  <input id="pesquisarEntrada" type="text" placeholder="Buscar..." class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-700">
                 </div>
                 <div>
                   <label class="block text-sm text-gray-600 mb-1">Data inicial</label>
-                  <input type="date" class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-700">
+                  <input id="dataInicial" type="date" class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-700">
                 </div>
                 <div>
                   <label class="block text-sm text-gray-600 mb-1">Data final</label>
-                  <input type="date" class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-700">
+                  <input id="dataFinal" type="date" class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-700">
                 </div>
             </div>
       

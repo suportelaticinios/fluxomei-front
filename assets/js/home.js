@@ -5,7 +5,7 @@ async function carregarInfoHome () {
     const token = localStorage.getItem("token");
   
     try {
-        const response = await fetch("http://192.168.2.2:8082/api-fluxomei/dashboard/mensal", {
+        const response = await fetch(`${URLAPI}dashboard/mensal`, {
             headers: {
             "Authorization": `Bearer ${token}`,
             "User-Agent": "front-fluxomei"
@@ -29,6 +29,10 @@ async function carregarInfoHome () {
         // ultimas movimentações - Entradas e Despesas
         ultimasEntradas(dados.ultimasEntradas);
         ultimasDespesas(dados.ultimasDespesas);
+
+        // resumo entradas/despesas
+        document.querySelector("#resumoEntradas span").innerHTML = toBR(dados.totalEntradas);
+        document.querySelector("#resumoDespesas span").innerHTML = toBR(dados.totalDespesas);
     } 
     catch (erro) {
       console.error("Erro ao carregar gráfico:", erro);
@@ -123,24 +127,27 @@ function toBR (valor)
 function ultimasEntradas(dados)
 {
     let ul = document.getElementById('ultimasEntradas');
-    console.log(dados);
-
+    
+    let i = 1;
     for (let d of dados)
     {
-        ul.innerHTML += '<li class="flex justify-between border-b py-2">'+
-                            '<span>'+ d.CATEGORIA+' '+
-                            '<small class="text-xs text-gray-500 ml-1">'+ d.DATA +'</small>'+
-                            '</span>'+
-                            '<strong>'+ toBR(d.VALOR)+'</strong>'+
-                        '</li>';
+        if (i <= 2)
+        {
+            ul.innerHTML += '<li class="flex justify-between border-b py-2">'+
+                                '<span>'+ d.CATEGORIA+' '+
+                                '<small class="text-xs text-gray-500 ml-1">'+ d.DATA +'</small>'+
+                                '</span>'+
+                                '<strong>'+ toBR(d.VALOR)+'</strong>'+
+                            '</li>';
+        }
+        i++;
     }
 }
 
 function ultimasDespesas(dados)
 {
     let ul = document.getElementById('ultimasDespesas');
-    console.log(dados);
-
+    
     for (let d of dados)
     {
         ul.innerHTML += '<li class="flex justify-between border-b py-2">'+

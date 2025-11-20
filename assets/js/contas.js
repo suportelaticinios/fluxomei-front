@@ -1,7 +1,7 @@
 var tbContas = document.getElementById('tabela-contas').querySelector('tbody');
 var modo = 'criar';
 var idConta = null;
-const url = "http://192.168.2.2:8082/api-fluxomei/conta/";
+const url =`${URLAPI}conta/`;
 const formConta = document.getElementById('formConta');
 const select = document.getElementById("idBanco");
 
@@ -57,7 +57,7 @@ formConta.addEventListener('submit', function (e) {
 function buscarBancos ()
 {
     // faz uma requisição a api para gerar relatório mensal
-    fetch('http://192.168.2.2:8082/api-fluxomei/banco/listar', {
+    fetch(`${URLAPI}banco/listar`, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}` // token no header
@@ -197,7 +197,7 @@ function cadastrarConta (data)
     });
 }
 
-// cadastrar uma conta
+// editar uma conta
 function editarConta (data)
 {
     document.getElementById("loadingScreen").classList.remove("hidden");

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="<?=URL?>assets/css/output.css" rel="stylesheet">
   <script src="<?=URL?>assets/js/auth.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
     <div class="min-h-screen flex bg-gray-50">
