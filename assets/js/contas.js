@@ -53,7 +53,7 @@ formConta.addEventListener('submit', function (e) {
     
 })
 
-// buscar todas as contas do usuário
+// buscar todos os bancos cadastrados no sistema
 function buscarBancos ()
 {
     // faz uma requisição a api para gerar relatório mensal
