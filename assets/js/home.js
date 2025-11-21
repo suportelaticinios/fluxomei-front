@@ -147,15 +147,20 @@ function ultimasEntradas(dados)
 function ultimasDespesas(dados)
 {
     let ul = document.getElementById('ultimasDespesas');
-    
+
+    let i = 1;
     for (let d of dados)
     {
-        ul.innerHTML += '<li class="flex justify-between border-b py-2">'+
-                            '<span>'+ d.CATEGORIA+' '+
-                            '<small class="text-xs text-gray-500 ml-1">'+ d.DATA +'</small>'+
-                            '</span>'+
-                            '<strong>'+ toBR(d.VALOR)+'</strong>'+
-                        '</li>';
+        if ( i <= 2)
+        {        
+            ul.innerHTML += '<li class="flex justify-between border-b py-2">'+
+                                '<span>'+ d.CATEGORIA+' '+
+                                '<small class="text-xs text-gray-500 ml-1">'+ d.DATA +'</small>'+
+                                '</span>'+
+                                '<strong>'+ toBR(d.VALOR)+'</strong>'+
+                            '</li>';
+        }
+        i++;
     }
 }
 

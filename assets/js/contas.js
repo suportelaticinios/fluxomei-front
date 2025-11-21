@@ -304,9 +304,7 @@ function toBR (valor)
         currency: 'BRL'
       });
 }
-function dataFormatadaBR (data)
-{
-    let date = new Date(data);
-
-    return date.toLocaleDateString();
+function dataFormatadaBR(data) {
+    const [ano, mes, dia] = data.split("-");
+    return `${dia}/${mes}/${ano}`;
 }
