@@ -39,7 +39,7 @@ function cadastrarSe(dados) {
 
     document.getElementById("loadingScreen").classList.remove("hidden");
 
-    fetch('http://192.168.2.2:8082/api-fluxomei/usuario/cadastrar', {
+    fetch('http://localhost/api-fluxomei/usuario/cadastrar', {
         method: 'POST',
         headers: {
             "Authorization": `Bearer ${token}`,

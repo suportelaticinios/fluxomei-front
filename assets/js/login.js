@@ -13,7 +13,7 @@ async function fazerLogin ()
     const email = document.getElementById('email').value;
     const senha = document.getElementById('senha').value;
 
-    const resposta = await fetch('http://192.168.2.2:8082/api-fluxomei/auth/login', {
+    const resposta = await fetch('http://localhost/api-fluxomei/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': "application/json",

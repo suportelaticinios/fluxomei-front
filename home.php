@@ -30,11 +30,11 @@
         <div class="grid grid-cols-2 gap-4 mb-4">
           <div class="p-4 bg-emerald-50 rounded-lg shadow-sm">
             <div class="text-sm text-gray-500">Entradas (mês)</div>
-            <div class="text-2xl font-bold text-emerald-600" id="totalEntradas">R$ 2.520,79</div>
+            <div class="text-2xl font-bold text-emerald-600" id="totalEntradas"></div>
           </div>
           <div class="p-4 bg-red-50 rounded-lg shadow-sm">
             <div class="text-sm text-gray-500">Despesas (mês)</div>
-            <div class="text-2xl font-bold text-red-600" id="totalDespesas">R$ 1.120,78</div>
+            <div class="text-2xl font-bold text-red-600" id="totalDespesas"></div>
           </div>
         </div>
 
@@ -73,14 +73,14 @@
     <div class="fade-up" style="transition-delay: .2s">
       <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
         <h2 class="text-lg font-semibold mb-4">Saldo</h2>
-        <div class="text-3xl font-bold text-emerald-600" id="saldoAtual">R$ 1.000,00</div>
+        <div class="text-3xl font-bold text-emerald-600" id="saldoAtual"></div>
         <p class="text-sm text-gray-500 mt-2">Saldo disponível</p>
       </div>
 
       <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition mt-6">
         <h2 class="text-lg font-semibold mb-4">Resumo Rápido</h2>
-        <div class="text-sm text-gray-600" id="resumoEntradas">Entradas: <span>R$ 1.000,00</span></div>
-        <div class="text-sm text-gray-600" id="resumoDespesas">Despesas: <span>R$ 2.000,00</span></div>
+        <div class="text-sm text-gray-600" id="resumoEntradas">Entradas: <span></span></div>
+        <div class="text-sm text-gray-600" id="resumoDespesas">Despesas: <span></span></div>
       </div>
     </div>
 
