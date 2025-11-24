@@ -1,5 +1,14 @@
 <?php require_once './pages/header.php';?>
   <title>Relatórios - FluxoMEI</title>
+
+  <!-- LOADING -->
+  <div id="loadingScreen" class="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-[9999] hidden">
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+      <p class="mt-4 text-emerald-700 font-medium">Carregando...</p>
+    </div>
+  </div>
+
   <!-- CONTEÚDO -->
   <main class="p-6" id="page-content">
         <div class="bg-white p-6 rounded-2xl shadow-sm w-full">  
@@ -33,7 +42,7 @@
                 <p class="text-sm text-gray-500 mb-3">Gera o balanço por período (mostra resumo por grupo e categorias).</p>
                 <div class="flex space-x-2">
                   <input type="month" class="border border-gray-300 p-2" id="mes-balanco">
-                  <button class="px-3 py-2 bg-emerald-600 text-white rounded">Gerar</button>
+                  <button id="btnRelatorioBalanco" class="px-3 py-2 bg-emerald-600 text-white rounded">Gerar</button>
                 </div>
               </div>
             </div>
@@ -87,5 +96,18 @@
           </div>
         </div>
   </main>
+
+  <!-- TOAST -->
+  <div id="toast" class="fixed top-6 right-6 z-[9999] hidden">
+    <div id="toastBox" class="bg-white shadow-lg border-l-4 p-4 rounded-lg min-w-[250px] flex items-start gap-3 animate-fadeIn">
+      <span id="toastIcon" class="text-xl">✔️</span>
+      <div>
+        <p id="toastTitle" class="font-semibold"></p>
+        <p id="toastMessage" class="text-sm text-gray-700"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/script.js"></script>
   <script src="assets/js/relatorios.js"></script>
 <?php require_once './pages/footer.php';?>

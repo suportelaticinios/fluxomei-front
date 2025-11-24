@@ -23,11 +23,11 @@ function verificarAutenticacao ()
         if (res.status === 401)
         {
             localStorage.removeItem('token');
-            window.location.href = URLBASE + "login.html";
+            window.location.href = URLBASE + "login.php";
         }
     })
     .catch(() => {
         localStorage.removeItem('token');
-        window.location.href = "login.html";
+        window.location.href = "login.php";
     })
 }
