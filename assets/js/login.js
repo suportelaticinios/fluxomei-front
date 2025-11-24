@@ -13,11 +13,10 @@ async function fazerLogin ()
     const email = document.getElementById('email').value;
     const senha = document.getElementById('senha').value;
 
-    const resposta = await fetch('http://localhost/api-fluxomei/auth/login', {
+    const resposta = await fetch('https://api.smlaticinios.com.br/api-fluxomei/auth/login', {
         method: 'POST',
         headers: {
-            'Content-Type': "application/json",
-            'User-Agent': "front-fluxomei"
+            'Content-Type': "application/json"
         },
         body: JSON.stringify({email, senha})
     });

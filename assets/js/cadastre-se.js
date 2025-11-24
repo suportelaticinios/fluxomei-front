@@ -39,7 +39,7 @@ function cadastrarSe(dados) {
 
     document.getElementById("loadingScreen").classList.remove("hidden");
 
-    fetch('http://localhost/api-fluxomei/usuario/cadastrar', {
+    fetch('https://api.smlaticinios.com.br/api-fluxomei/usuario/cadastrar', {
         method: 'POST',
         headers: {
             "Authorization": `Bearer ${token}`,

@@ -7,8 +7,7 @@ async function carregarInfoHome () {
     try {
         const response = await fetch(`${URLAPI}dashboard/mensal`, {
             headers: {
-            "Authorization": `Bearer ${token}`,
-            "User-Agent": "front-fluxomei"
+            "Authorization": `Bearer ${token}`
             }
         });
   

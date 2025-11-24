@@ -255,8 +255,7 @@ function registrarEntrada (data)
         method: 'POST',
         headers: {
             "Authorization": `Bearer ${token}`, // token no header
-            'Content-Type': "application/json",
-            'User-Agent': "front-fluxomei"
+            'Content-Type': "application/json"
         },
         body: JSON.stringify(data) // só enviar body em POST/PUT/PATCH
     })
@@ -298,8 +297,7 @@ function editarEntrada (data)
         method: 'PUT',
         headers: {
             "Authorization": `Bearer ${token}`, // token no header
-            'Content-Type': "application/json",
-            'User-Agent': "front-fluxomei"
+            'Content-Type': "application/json"
         },
         body: JSON.stringify(data) // só enviar body em POST/PUT/PATCH
     })
