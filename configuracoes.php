@@ -16,66 +16,18 @@
                 <h2 class="text-lg font-medium text-gray-700 mb-3">Últimas Faturas</h2>
 
                 <div class="overflow-x-auto">
-                    <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">#</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">Data</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">Valor</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">Status</th>
-                            <th class="px-4 py-2 text-center text-sm font-semibold text-gray-600 border-b">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        <tr>
-                            <td class="px-4 py-2 text-sm text-gray-700">#1258</td>
-                            <td class="px-4 py-2 text-sm text-gray-700">10/11/2025</td>
-                            <td class="px-4 py-2 text-sm text-gray-700">R$ 350,00</td>
-                            <td class="px-4 py-2 text-sm">
-                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">Pago</span>
-                            </td>
-                            <td class="px-4 py-2 text-center space-x-2">
-                                <button class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-blue-200 transition">Ver detalhes</button>
-                                <button class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-gray-200 transition">Baixar PDF</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2 text-sm text-gray-700">#1257</td>
-                            <td class="px-4 py-2 text-sm text-gray-700">10/10/2025</td>
-                            <td class="px-4 py-2 text-sm text-gray-700">R$ 350,00</td>
-                            <td class="px-4 py-2 text-sm">
-                                <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold">Pendente</span>
-                            </td>
-                            <td class="px-4 py-2 text-center space-x-2">
-                                <button class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-blue-200 transition">Ver detalhes</button>
-                                <button class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-gray-200 transition">Baixar PDF</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2 text-sm text-gray-700">#1256</td>
-                            <td class="px-4 py-2 text-sm text-gray-700">10/09/2025</td>
-                            <td class="px-4 py-2 text-sm text-gray-700">R$ 350,00</td>
-                            <td class="px-4 py-2 text-sm">
-                                <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold">Vencido</span>
-                            </td>
-                            <td class="px-4 py-2 text-center space-x-2">
-                                <button class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-blue-200 transition">Ver detalhes</button>
-                                <button class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-gray-200 transition">Baixar PDF</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2 text-sm text-gray-700">#1255</td>
-                            <td class="px-4 py-2 text-sm text-gray-700">10/08/2025</td>
-                            <td class="px-4 py-2 text-sm text-gray-700">R$ 350,00</td>
-                            <td class="px-4 py-2 text-sm">
-                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold">Cancelado</span>
-                            </td>
-                            <td class="px-4 py-2 text-center space-x-2">
-                                <button class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-blue-200 transition">Ver detalhes</button>
-                                <button class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-gray-200 transition">Baixar PDF</button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden" id="tabela-cobrancas">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">#</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">Data</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">Valor</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">Status</th>
+                                <th class="px-4 py-2 text-center text-sm font-semibold text-gray-600 border-b">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">                            
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -139,4 +91,5 @@
 
   </script>
   <script src="<?=URL?>assets/js/script.js"></script>
+  <script src="<?=URL?>assets/js/configuracao.js"></script>
 <?php require_once './pages/footer.php';?>
