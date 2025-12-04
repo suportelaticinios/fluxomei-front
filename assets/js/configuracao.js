@@ -1,6 +1,28 @@
 const url =`${URLAPI}configuracao/`;
+var cpf_cnpj = null;
+var email = null;
+const formContato = document.getElementById('formContato');
 var tbCobrancas = document.getElementById('tabela-cobrancas').querySelector('tbody');
+
 buscarCobrancas();
+
+// máscara do campo de telefone
+$('#telefone').mask('(00) 00000-0000');
+
+formContato.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    document.getElementById("loadingScreen").classList.remove("hidden");
+    
+    atualizar({
+      'id_plano': document.getElementById('idPlano').value,
+      'nome': document.getElementById('nome').value,
+      'telefone': document.getElementById('telefone').value,
+      'senha': document.getElementById('senha').value,
+      'cpf_cnpj': cpf_cnpj,
+      'email': email
+    })
+})
 
 // buscar todas as entradas do usuário
 function buscarCobrancas (filtros = {})
@@ -35,10 +57,51 @@ function buscarCobrancas (filtros = {})
     .then(data => {
         // console.log("Sucesso: ", data);
         montarTabela(data.response.data);
+        setarCampos(data.dadosUsuario);
     })
     .catch(error => {
         console.log("Error: ", error.message);
     })
+}
+
+// atualizar informações do usuário
+function atualizar(dados) {
+    let token = localStorage.getItem('token');
+
+    document.getElementById("loadingScreen").classList.remove("hidden");
+
+    fetch(URLAPI + '/usuario/editar/', {
+        method: 'PUT',
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(dados)
+    })
+    .then(async response => {
+        if (!response.ok) {
+            const erro = await response.json();
+
+            if (response.status === 401) {
+                showToast("error", "Não autorizado", erro.message || "Token inválido ou expirado.");
+            }
+
+            throw new Error(erro.message || "Erro desconhecido");
+        }
+
+        return response.json();
+    })
+    .then(data => {
+        showToast("success", "Sucesso", data.message);
+    })
+    .catch(error => {
+        console.log("Error: ", error.message);
+        showToast("error", "Atenção", error.message);
+    })
+    .finally(() => {
+        // só aqui o loading some — DEPOIS de TUDO terminar
+        document.getElementById("loadingScreen").classList.add("hidden");
+    });
 }
 
 // montar a tabela de contas
@@ -101,4 +164,12 @@ function toBR (valor)
 function dataFormatadaBR(data) {
     const [ano, mes, dia] = data.split("-");
     return `${dia}/${mes}/${ano}`;
+}
+
+function setarCampos (dados)
+{
+    document.getElementById("nome").value = dados.NOME;
+    document.getElementById("telefone").value = dados.TELEFONE;
+    cpf_cnpj = dados.CPF_CNPJ
+    email = dados.EMAIL
 }
