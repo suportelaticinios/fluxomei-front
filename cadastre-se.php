@@ -91,7 +91,7 @@ $planoSelecionado = (!empty($_GET['plano'])) ? htmlspecialchars($_GET['plano']) 
       <p class="text-xs text-gray-500 mt-4 text-center">Ao se cadastrar, você concorda com nossos termos.</p>
 
       <p class="text-sm text-gray-600 mt-4 text-center">
-        Já tem conta? <a href="login.html" class="text-emerald-600 font-semibold hover:underline">Entrar</a>
+        Já tem conta? <a href="<?=URL?>login" class="text-emerald-600 font-semibold hover:underline">Entrar</a>
       </p>
 
     </div>
