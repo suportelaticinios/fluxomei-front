@@ -58,6 +58,12 @@ function montarTabela (dados)
             case "PENDING":
                 span = '<span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold">Pendente</span>';
                 break;
+            case "REFUND_REQUESTED":
+                span = '<span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold">Estorno Solicitado</span>';
+                break;
+            case "REFUNDED":
+                span = '<span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">Estornado</span>';
+                break;
             case "VENCED":
                 span = '<span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold">Vencido</span>';
                 break;
