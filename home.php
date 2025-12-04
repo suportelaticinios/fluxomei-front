@@ -78,7 +78,7 @@
       </div>
 
       <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition mt-6">
-        <h2 class="text-lg font-semibold mb-4">Resumo Rápido</h2>
+        <h2 class="text-lg font-semibold mb-4">Resumo Rápido - Total</h2>
         <div class="text-sm text-gray-600" id="resumoEntradas">Entradas: <span></span></div>
         <div class="text-sm text-gray-600" id="resumoDespesas">Despesas: <span></span></div>
       </div>

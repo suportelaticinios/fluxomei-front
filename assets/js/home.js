@@ -21,8 +21,8 @@ async function carregarInfoHome () {
         montarGraficoEntradas(dados); // cria o gráfico de entradas
 
         //total de entradas e saidas
-        document.getElementById('totalEntradas').innerHTML = toBR(dados.totalEntradas);
-        document.getElementById('totalDespesas').innerHTML = toBR(dados.totalDespesas);
+        document.getElementById('totalEntradas').innerHTML = toBR(dados.totalEntradasMes);
+        document.getElementById('totalDespesas').innerHTML = toBR(dados.totalDespesasMes);
         document.getElementById('saldoAtual').innerHTML = toBR(dados.saldoAtual);
 
         // ultimas movimentações - Entradas e Despesas
