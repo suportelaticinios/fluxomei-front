@@ -1,5 +1,5 @@
 const token = localStorage.getItem("token");
-const URLBASE = "http://192.168.2.2:8082/fluxomei-front/";
+const URLBASE = "http://localhost/fluxomei-front/";
 const URLAPI = "https://api.smlaticinios.com.br/api-fluxomei/";
 
 verificarAutenticacao();
