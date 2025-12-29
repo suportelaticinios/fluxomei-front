@@ -1,9 +1,5 @@
 const token = localStorage.getItem("token");
-const URLBASE = "http://localhost/fluxomei-front/";
-const URLAPI = "https://api.smlaticinios.com.br/api-fluxomei/";
-
 verificarAutenticacao();
-
 
 function verificarAutenticacao ()
 {

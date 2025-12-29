@@ -13,7 +13,7 @@ async function fazerLogin ()
     const email = document.getElementById('email').value;
     const senha = document.getElementById('senha').value;
 
-    const resposta = await fetch('https://api.smlaticinios.com.br/api-fluxomei/auth/login', {
+    const resposta = await fetch(URLAPI + '/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': "application/json"
