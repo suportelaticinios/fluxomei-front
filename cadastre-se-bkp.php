@@ -8,6 +8,7 @@ $planoSelecionado = (!empty($_GET['plano'])) ? htmlspecialchars($_GET['plano']) 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="<?=URL?>/assets/css/output.css" rel="stylesheet">
+  <script src="https://www.asaas.com/assets/checkout/asaas.js"></script>
   <title>Cadastro - FluxoMEI</title>
 </head>
 <body>
@@ -54,6 +55,11 @@ $planoSelecionado = (!empty($_GET['plano'])) ? htmlspecialchars($_GET['plano']) 
             </label>
           </div>
         </div>
+      <!-- data de nascimento -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Data de nascimento</label>
+        <input id="dataNascimento" type="date" class="mt-1 w-full border rounded p-2">
+      </div>
 
         <!-- CPF/CNPJ -->
         <div>
@@ -84,6 +90,76 @@ $planoSelecionado = (!empty($_GET['plano'])) ? htmlspecialchars($_GET['plano']) 
           <label class="block text-sm font-medium text-gray-700">Senha</label>
           <input id="senha" type="password" class="mt-1 w-full border rounded p-2" placeholder="********">
         </div>
+
+        <!-- endereço de cobrança -->
+        <div id="enderecoCobranca" class="space-y-3 hidden">
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">CEP</label>
+            <input id="cep" type="text" class="mt-1 w-full border rounded p-2" placeholder="00000-000">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Rua</label>
+            <input id="rua" type="text" class="mt-1 w-full border rounded p-2">
+          </div>
+
+          <div class="flex gap-3">
+            <div class="w-1/2">
+              <label class="block text-sm font-medium text-gray-700">Número</label>
+              <input id="numero" type="text" class="mt-1 w-full border rounded p-2">
+            </div>
+            <div class="w-1/2">
+              <label class="block text-sm font-medium text-gray-700">Bairro</label>
+              <input id="bairro" type="text" class="mt-1 w-full border rounded p-2">
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <div class="w-2/3">
+              <label class="block text-sm font-medium text-gray-700">Cidade</label>
+              <input id="cidade" type="text" class="mt-1 w-full border rounded p-2">
+            </div>
+            <div class="w-1/3">
+              <label class="block text-sm font-medium text-gray-700">UF</label>
+              <input id="estado" type="text" maxlength="2" class="mt-1 w-full border rounded p-2">
+            </div>
+          </div>
+
+        </div>
+
+        <!-- dados do cartão -->
+        <div id="pagamentoCartao" class="space-y-3 hidden border-t pt-4 mt-4">
+
+          <h2 class="text-lg font-semibold text-gray-700">Pagamento</h2>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Número do cartão</label>
+            <input id="cardNumber" type="text" class="mt-1 w-full border rounded p-2" placeholder="0000 0000 0000 0000">
+          </div>
+
+          <div class="flex gap-3">
+            <div class="w-1/3">
+              <label class="block text-sm font-medium text-gray-700">Validade</label>
+              <input id="cardExpiry" type="text" class="mt-1 w-full border rounded p-2" placeholder="MM/AA">
+            </div>
+            <div class="w-1/3">
+              <label class="block text-sm font-medium text-gray-700">CVV</label>
+              <input id="cardCvv" type="text" class="mt-1 w-full border rounded p-2" placeholder="123">
+            </div>
+            <div class="w-1/3">
+              <label class="block text-sm font-medium text-gray-700">Parcelas</label>
+              <select id="parcelas" class="mt-1 w-full border rounded p-2">
+                <option value="1">1x</option>
+                <option value="2">2x</option>
+                <option value="3">3x</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+
 
         <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded font-medium hover:bg-emerald-700 transition">Cadastrar</button>
       </form>

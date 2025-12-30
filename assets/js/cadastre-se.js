@@ -91,4 +91,33 @@ $('#idPlano').on('change', function () {
       $('#pagamentoCartao').addClass('hidden');
       $('#enderecoCobranca').addClass('hidden');
     }
-  });
+});
+
+// $('#formCadastro').on('submit', function (e) {
+//     e.preventDefault();
+  
+//     let plano = $('#idPlano').val();
+  
+//     if (plano == 2) {
+  
+//       Asaas.creditCard.createToken({
+//         holderName: $('#nome').val(),
+//         number: $('#cardNumber').val().replace(/\s/g, ''),
+//         expiryMonth: $('#cardExpiry').val().split('/')[0],
+//         expiryYear: '20' + $('#cardExpiry').val().split('/')[1],
+//         ccv: $('#cardCvv').val()
+//       }, function (response) {
+  
+//         if (response.errors) {
+//           alert('Erro ao validar cartão');
+//           return;
+//         }
+  
+//         enviarCadastro(response.creditCardToken);
+//       });
+  
+//     } else {
+//       enviarCadastro(null);
+//     }
+//   });
+  
