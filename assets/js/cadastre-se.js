@@ -82,3 +82,13 @@ radios.forEach(radio => {
         aplicarMascara();
     });
 });
+
+$('#idPlano').on('change', function () {
+    if ($(this).val() == 2) {
+      $('#pagamentoCartao').removeClass('hidden');
+      $('#enderecoCobranca').removeClass('hidden');
+    } else {
+      $('#pagamentoCartao').addClass('hidden');
+      $('#enderecoCobranca').addClass('hidden');
+    }
+  });
