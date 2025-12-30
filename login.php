@@ -42,6 +42,7 @@
         </div>
         </div>
     </div>
+    <script src="assets/js/config.js"></script>
     <script src="assets/js/login.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
