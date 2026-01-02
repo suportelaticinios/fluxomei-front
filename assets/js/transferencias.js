@@ -26,7 +26,7 @@ $('#valor').mask('0.000.000,00', { reverse: true });
    EVENTOS
 ========================= */
 
-// abrir edição
+// excluir transferencia
 document.addEventListener("click", function (e) {
     const btn = e.target.closest(".excluirTransferencia");
 
@@ -81,8 +81,8 @@ function buscarTransferencias(filtros = {}) {
     })
     .then(r => r.json())
     .then(data => {
-        montarTabela(data);
-        listaTransferencias = data;
+        montarTabela(data.dados);
+        listaTransferencias = data.dados;
     })
     .catch(err => console.log(err));
 }
@@ -198,16 +198,16 @@ function montarTabela(dados) {
     dados.forEach(t => {
         tbTransferencias.innerHTML += `
             <tr class="hover:bg-gray-50">
-                <td class="px-4 py-2">${t.id}</td>
+                <td class="px-4 py-2">${t.ID_TRANSFERENCIA}</td>
                 <td class="px-4 py-2">${dataFormatadaBR(t.DATA)}</td>
                 <td class="px-4 py-2">${t.CONTA_ORIGEM}</td>
                 <td class="px-4 py-2">${t.CONTA_DESTINO}</td>
                 <td class="px-4 py-2">${t.CATEGORIA}</td>
                 <td class="px-4 py-2">${t.DESCRICAO || ''}</td>
-                <td class="px-4 py-2 font-semibold">${toBR(t.valor)}</td>
+                <td class="px-4 py-2 font-semibold">${toBR(t.VALOR)}</td>
                 <td class="px-4 py-2">
                     <a href="#" 
-                       data-id="${t.id}" 
+                       data-id="${t.ID_TRANSFERENCIA}" 
                        class="text-red-600 hover:underline excluirTransferencia">
                        Excluir
                     </a>

@@ -29,6 +29,7 @@ async function fazerLogin ()
     {
         // salvar o token no navegador
         localStorage.setItem("token", data.token);
+        localStorage.setItem("nome", data.nome);
 
         // redirecionar para área protegida
         window.location.href = "home.php";

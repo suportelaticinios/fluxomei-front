@@ -148,4 +148,4 @@
   <script src="assets/js/script.js"></script>
   <script src="assets/js/entradas.js"></script>
 
-<?php require_once './pages/header.php';?>
+<?php require_once './pages/footer.php';?>

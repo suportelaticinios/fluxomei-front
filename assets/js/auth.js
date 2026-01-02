@@ -1,4 +1,5 @@
-const token = localStorage.getItem("token");
+const token     = localStorage.getItem("token");
+
 verificarAutenticacao();
 
 function verificarAutenticacao ()
@@ -15,10 +16,13 @@ function verificarAutenticacao ()
             "Authorization": `Bearer ${token}`
         }
     })
-    .then(res => {
+    .then(res => 
+    {
+        
         if (res.status === 401)
         {
             localStorage.removeItem('token');
+            localStorage.removeItem('nome');
             window.location.href = URLBASE + "login.php";
         }
     })
@@ -27,3 +31,4 @@ function verificarAutenticacao ()
         window.location.href = "login.php";
     })
 }
+
