@@ -43,8 +43,7 @@ function cadastrarSe(dados) {
         method: 'POST',
         headers: {
             "Authorization": `Bearer ${token}`,
-            'Content-Type': "application/json",
-            'User-Agent': "front-fluxomei"
+            'Content-Type': "application/json"
         },
         body: JSON.stringify({ dados })
     })

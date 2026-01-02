@@ -30,6 +30,7 @@
           <a href="<?=URL?>contas" class="block py-2 px-3 rounded hover:bg-emerald-50 text-gray-700">Contas</a>
           <a href="<?=URL?>entradas" class="block py-2 px-3 rounded hover:bg-emerald-50 text-gray-700">Entradas</a>
           <a href="<?=URL?>despesas" class="block py-2 px-3 rounded hover:bg-emerald-50 text-gray-700">Despesas</a>
+          <a href="<?=URL?>transferencias" class="block py-2 px-3 rounded hover:bg-emerald-50 text-gray-700">Transferencias</a>
           <a href="<?=URL?>relatorios" class="block py-2 px-3 rounded hover:bg-emerald-50 text-gray-700">Relatórios</a>
           <a href="<?=URL?>configuracoes" class="block py-2 px-3 rounded hover:bg-emerald-50 text-gray-700">Configurações</a>
           <a href="#" id="logout" class="block py-2 px-3 rounded hover:bg-emerald-50 text-gray-700 mt-6">Sair</a>
