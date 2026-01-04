@@ -26,6 +26,14 @@
             <option value="fluxo_caixa">Fluxo de Caixa</option>
           </select>
         </div>
+        
+        <div class="md:col-span-4 hidden" id="filtro-conta">
+          <label class="text-sm font-medium text-gray-700">Conta</label>
+          <select id="conta" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+            <option value="">Selecione a conta</option>
+            <!-- contas dinâmicas -->
+          </select>
+        </div>
 
         <div class="col-span-2">
           <label class="text-sm font-medium text-gray-700">Data Inicial</label>
@@ -37,6 +45,27 @@
           <input type="date" id="data-final" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
         </div>
 
+        <!-- FILTROS AVANÇADOS (FUTURO)-->
+        <div class="grid grid-cols-1 md:col-span-4 md:grid-cols-3 gap-4 mb-6 hidden" id="filtros-avancados">
+          <div>
+            <label class="text-sm font-medium text-gray-700">Tipo de Movimentação</label>
+            <select id="tipo-movimentacao" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+              <option value="">Todas</option>
+              <option value="entrada">Entradas</option>
+              <option value="saida">Saídas</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="text-sm font-medium text-gray-700">Grupo de Categorias</label>
+            <select id="grupo-categoria" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+              <option value="">Todas</option>
+              <!-- categorias dinâmicas -->
+            </select>
+          </div>
+
+        </div>
+
         <div class="flex items-end col-span-4">
           <button id="btnGerarRelatorio"
                   class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded">
@@ -44,29 +73,7 @@
           </button>
         </div>
 
-      </div>
-
-      <!-- FILTROS AVANÇADOS -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-
-        <div>
-          <label class="text-sm font-medium text-gray-700">Tipo de Movimentação</label>
-          <select id="tipo-movimentacao" class="w-full border rounded p-2 mt-1">
-            <option value="">Todas</option>
-            <option value="entrada">Entradas</option>
-            <option value="saida">Saídas</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="text-sm font-medium text-gray-700">Categoria</label>
-          <select id="categoria" class="w-full border rounded p-2 mt-1">
-            <option value="">Todas</option>
-            <!-- categorias dinâmicas -->
-          </select>
-        </div>
-
-      </div>
+      </div>     
 
       <!-- INDICADORES -->
       <div id="indicadores" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 hidden">
@@ -108,9 +115,9 @@
           <button id="exportPdf" class="px-4 py-2 bg-red-600 text-white rounded">
             Exportar PDF
           </button>
-          <button id="exportCsv" class="px-4 py-2 bg-emerald-700 text-white rounded">
+          <!-- <button id="exportCsv" class="px-4 py-2 bg-emerald-700 text-white rounded">
             Exportar CSV
-          </button>
+          </button> -->
         </div>
       </div>
 

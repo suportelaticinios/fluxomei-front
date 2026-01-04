@@ -9,7 +9,31 @@ const btnExportCsv = document.getElementById('exportCsv');
 
 btnGerarRelatorio.addEventListener('click', gerarRelatorio);
 btnExportPdf.addEventListener('click', () => exportarRelatorio('pdf'));
-btnExportCsv.addEventListener('click', () => exportarRelatorio('csv'));
+// btnExportCsv.addEventListener('click', () => exportarRelatorio('csv'));
+
+const selectTipoRelatorio = document.getElementById('tipo-relatorio');
+const filtroConta = document.getElementById('filtro-conta');
+const filtrosAvancado = document.getElementById('filtros-avancados');
+
+selectTipoRelatorio.addEventListener('change', () =>
+{
+    // limpar indicadores e tabela
+    document.getElementById('indicadores').classList.add('hidden');
+    document.getElementById('previa-relatorios').classList.add('hidden');
+
+    if (selectTipoRelatorio.value === 'fluxo_caixa')
+    {
+        filtroConta.classList.remove('hidden');
+        filtrosAvancado.classList.remove('hidden');
+
+        carregarContas();
+        carregarGrupoDeCategorias();
+    } else {
+        filtroConta.classList.add('hidden');
+        filtrosAvancado.classList.add('hidden');
+        document.getElementById('conta').value = '';
+    }
+});
 
 let filtrosAtuais = {};
 
@@ -22,7 +46,7 @@ function gerarRelatorio()
     const dataInicial = document.getElementById('data-inicial').value;
     const dataFinal = document.getElementById('data-final').value;
     const tipoMov = document.getElementById('tipo-movimentacao').value;
-    const categoria = document.getElementById('categoria').value;
+    const grupoCategoria = document.getElementById('grupo-categoria').value;
 
     if (!tipo || !dataInicial || !dataFinal) {
         toast('Atenção', 'Preencha o tipo de relatório e o período.', '⚠️');
@@ -34,8 +58,21 @@ function gerarRelatorio()
         dataInicial,
         dataFinal,
         tipoMov,
-        categoria
+        grupoCategoria
     };
+
+    // fluxo de caixa exige conta
+    if (tipo === 'fluxo_caixa') {
+        const idConta = document.getElementById('conta').value;
+
+        if (!idConta) {
+            toast('Atenção', 'Selecione uma conta para o fluxo de caixa.', '⚠️');
+            loading.classList.add('hidden');
+            return;
+        }
+
+        filtrosAtuais.idConta = idConta;
+    }
 
     loading.classList.remove('hidden');
 
@@ -93,6 +130,65 @@ function exportarRelatorio(formato)
 }
 
 /**
+ * BUSCAR CONTAS DO USUÁRIO
+ */
+function carregarContas() {
+    fetch(URLAPI + 'conta/listar', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(res => res.json())
+    .then(contas => {
+        const selectConta = document.getElementById('conta');
+        selectConta.innerHTML = '<option value="">Selecione a conta</option>';
+
+        contas.forEach(c => {
+            console.log(c);
+            selectConta.innerHTML += `
+                <option value="${c.ID_CONTA}">
+                    ${c.NUMERO_CONTA} - ${moeda(c.SALDO_ATUAL)}
+                </option>
+            `;
+        });
+    })
+    .catch(err => {
+        console.error(err);
+        toast('Erro', 'Erro ao carregar contas.', '❌');
+    });
+}
+
+/**
+ * BUSCAR GRUPO DE CATEGORIAS
+ */
+function carregarGrupoDeCategorias() {
+    fetch(URLAPI + 'categoria/grupos', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(res => res.json())
+    .then(contas => {
+        const selectGrupoCategoria = document.getElementById('grupo-categoria');
+        selectGrupoCategoria.innerHTML = '<option value="">Todas</option>';
+
+        contas.forEach(c => {
+            console.log(c);
+            selectGrupoCategoria.innerHTML += `
+                <option value="${c.ID_GRUPOS}">
+                    ${c.NOME}
+                </option>
+            `;
+        });
+    })
+    .catch(err => {
+        console.error(err);
+        toast('Erro', 'Erro ao carregar contas.', '❌');
+    });
+}
+
+
+/**
  * INDICADORES
  */
 function montarIndicadores(ind) {
@@ -143,22 +239,24 @@ function montarTabela(tipo, linhas) {
     if (tipo === 'fluxo_caixa') {
         head.innerHTML = `
             <tr>
-                <th class="pb-2">Data</th>
-                <th class="pb-2 text-right">Entradas</th>
-                <th class="pb-2 text-right">Saídas</th>
-                <th class="pb-2 text-right">Saldo do Dia</th>
-                <th class="pb-2 text-right">Saldo Acumulado</th>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th class="text-right">Valor</th>
+                <th class="text-right">Saldo</th>
             </tr>
         `;
 
         linhas.forEach(l => {
             body.innerHTML += `
                 <tr class="border-b">
-                    <td class="py-2">${l.data}</td>
-                    <td class="py-2 text-right text-green-600">${moeda(l.entradas)}</td>
-                    <td class="py-2 text-right text-red-600">${moeda(l.saidas)}</td>
-                    <td class="py-2 text-right">${moeda(l.saldo_dia)}</td>
-                    <td class="py-2 text-right font-semibold">${moeda(l.saldo_acumulado)}</td>
+                    <td>${l.data}</td>
+                    <td>${l.descricao}</td>
+                    <td class="text-right ${l.valor >= 0 ? 'text-green-600' : 'text-red-600'}">
+                        ${moeda(l.valor)}
+                    </td>
+                    <td class="text-right font-semibold">
+                        ${moeda(l.saldo)}
+                    </td>
                 </tr>
             `;
         });
