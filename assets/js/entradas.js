@@ -11,11 +11,15 @@ var modo = 'criar';
 var idEntrada = null;
 
 buscarEntradas();
-bucarContas();
+buscarContas();
 buscarCategorias();
 
 // mascaras
 $('#valor').mask('0.000.000,00', {reverse: true});
+
+/* ====================================
+    EVENTOS
+ ========================================*/
 
 // evento para buscar os dados da entrada a ser editada
 document.addEventListener("click", function(e) {
@@ -70,6 +74,134 @@ formEntrada.addEventListener('submit', function (e) {
         })
     }
 })
+
+// excluir entrada
+document.addEventListener("click", function (e) {
+    const btn = e.target.closest(".excluirEntrada");
+
+    if (!btn) return;
+
+    if (!confirm('Deseja realmente excluir esta entrada?')) return;
+
+    excluirEntrada(btn.dataset.id);
+});
+
+/* =========================
+   API
+========================= */
+
+// registrar uma nova entrada
+function registrarEntrada (data)
+{
+    document.getElementById("loadingScreen").classList.remove("hidden");
+
+    // faz uma requisição a api para gerar relatório mensal
+    fetch(url + `cadastrar`, {
+        method: 'POST',
+        headers: {
+            "Authorization": `Bearer ${token}`, // token no header
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(data) // só enviar body em POST/PUT/PATCH
+    })
+    .then(async response => {
+        if (!response.ok) {
+            const erro = await response.json();
+
+            if (response.status === 401) {
+                showToast("error", "Não autorizado", erro.message || "Token inválido ou expirado.");
+            }
+
+            throw new Error(erro.message || "Erro desconhecido");
+        }
+
+        return response.json();
+    })
+    .then(data => {
+        showToast("success", "Sucesso", data.message);
+        formEntrada.reset();
+        buscarEntradas();
+    })
+    .catch(error => {
+        console.log("Error: ", error.message);
+        showToast("error", "Atenção", error.message);
+    })
+    .finally(() => {
+        // só aqui o loading some — DEPOIS de TUDO terminar
+        document.getElementById("loadingScreen").classList.add("hidden");
+    });
+}
+
+// editar uma entrada
+function editarEntrada (data)
+{
+    document.getElementById("loadingScreen").classList.remove("hidden");
+
+    // faz uma requisição a api para gerar relatório mensal
+    fetch(url + `editar/${data.id_entrada}`, {
+        method: 'PUT',
+        headers: {
+            "Authorization": `Bearer ${token}`, // token no header
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(data) // só enviar body em POST/PUT/PATCH
+    })
+    .then(async response => {
+        if (!response.ok) {
+            const erro = await response.json();
+
+            if (response.status === 401) {
+                showToast("error", "Não autorizado", erro.message || "Token inválido ou expirado.");
+            }
+
+            throw new Error(erro.message || "Erro desconhecido");
+        }
+
+        return response.json();
+    })
+    .then(data => {
+        showToast("success", "Sucesso", data.message);
+        buscarEntradas();
+    })
+    .catch(error => {
+        console.log("Error: ", error.message);
+        showToast("error", "Atenção", error.message);
+    })
+    .finally(() => {
+        // só aqui o loading some — DEPOIS de TUDO terminar
+        document.getElementById("loadingScreen").classList.add("hidden");
+    });
+}
+
+function excluirEntrada(id) {
+    document.getElementById("loadingScreen").classList.remove("hidden");
+
+    fetch(url + `deletar/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    .then(async r => {
+        if (!r.ok) {
+            const erro = await r.json();
+            throw new Error(erro.message);
+        }
+        return r.json();
+    })
+    .then(data => {
+        showToast("success", "Sucesso", data.message);
+        buscarEntradas();
+        buscarCategorias();
+        buscarContas();
+    })
+    .catch(err => {
+        showToast("error", "Erro", err.message);
+    })
+    .finally(() => {
+        document.getElementById("loadingScreen").classList.add("hidden");
+    });
+}
 
 // buscar todas as entradas do usuário
 function buscarEntradas (filtros = {})
@@ -145,8 +277,13 @@ function buscarEntradaId (id)
     });
 }
 
+
+/* =========================
+   AUXILIARES
+========================= */
+
 // buscar todas as contas do usuário
-function bucarContas()
+function buscarContas()
 {
     // faz uma requisição a api para gerar relatório mensal
     fetch(`${URLAPI}conta/listar`, {
@@ -240,92 +377,10 @@ function montarTabela (dados)
                                 '<td class="px-4 py-2">'+ toBR(dados[d].VALOR) +'</td>'+
                                 '<td class="px-4 py-2">'+
                                     '<a href="#" data-id="'+ dados[d].ID_ENTRADA +'" data-titulo="Editar Entrada" data-modo="editar" class="text-emerald-700 hover:underline openModalBtn editarEntrada">Editar</a>'+
+                                    '<a href="#" data-id="'+ dados[d].ID_ENTRADA +'" data-titulo="Excluir Entrada" class="text-red-600 ml-2 hover:underline excluirEntrada">Excluir</a>'+
                                 '</td>'+
                             '</tr>';
     }
-}
-
-// registrar uma nova entrada
-function registrarEntrada (data)
-{
-    document.getElementById("loadingScreen").classList.remove("hidden");
-
-    // faz uma requisição a api para gerar relatório mensal
-    fetch(url + `cadastrar`, {
-        method: 'POST',
-        headers: {
-            "Authorization": `Bearer ${token}`, // token no header
-            'Content-Type': "application/json"
-        },
-        body: JSON.stringify(data) // só enviar body em POST/PUT/PATCH
-    })
-    .then(async response => {
-        if (!response.ok) {
-            const erro = await response.json();
-
-            if (response.status === 401) {
-                showToast("error", "Não autorizado", erro.message || "Token inválido ou expirado.");
-            }
-
-            throw new Error(erro.message || "Erro desconhecido");
-        }
-
-        return response.json();
-    })
-    .then(data => {
-        showToast("success", "Sucesso", data.message);
-        formEntrada.reset();
-        buscarEntradas();
-    })
-    .catch(error => {
-        console.log("Error: ", error.message);
-        showToast("error", "Atenção", error.message);
-    })
-    .finally(() => {
-        // só aqui o loading some — DEPOIS de TUDO terminar
-        document.getElementById("loadingScreen").classList.add("hidden");
-    });
-}
-
-// editar uma entrada
-function editarEntrada (data)
-{
-    document.getElementById("loadingScreen").classList.remove("hidden");
-
-    // faz uma requisição a api para gerar relatório mensal
-    fetch(url + `editar/${data.id_entrada}`, {
-        method: 'PUT',
-        headers: {
-            "Authorization": `Bearer ${token}`, // token no header
-            'Content-Type': "application/json"
-        },
-        body: JSON.stringify(data) // só enviar body em POST/PUT/PATCH
-    })
-    .then(async response => {
-        if (!response.ok) {
-            const erro = await response.json();
-
-            if (response.status === 401) {
-                showToast("error", "Não autorizado", erro.message || "Token inválido ou expirado.");
-            }
-
-            throw new Error(erro.message || "Erro desconhecido");
-        }
-
-        return response.json();
-    })
-    .then(data => {
-        showToast("success", "Sucesso", data.message);
-        buscarEntradas();
-    })
-    .catch(error => {
-        console.log("Error: ", error.message);
-        showToast("error", "Atenção", error.message);
-    })
-    .finally(() => {
-        // só aqui o loading some — DEPOIS de TUDO terminar
-        document.getElementById("loadingScreen").classList.add("hidden");
-    });
 }
 
 // preencher o formulárioe com os dados
@@ -338,6 +393,10 @@ function preencherForm (dados)
     document.getElementById('valor').value = toBR(dados.VALOR);
 }
 
+
+/* =========================
+   HELPERS
+========================= */
 
 function toBR (valor)
 {

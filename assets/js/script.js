@@ -27,9 +27,9 @@ closeBtn.addEventListener("click", closeModal);
 cancelBtn.addEventListener("click", closeModal);
 
 // Fechar clicando fora
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) closeModal();
-});
+// modal.addEventListener("click", (e) => {
+//   if (e.target === modal) closeModal();
+// });
 
 // toast
 function showToast(type, title, message) {

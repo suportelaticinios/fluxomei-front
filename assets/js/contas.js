@@ -8,6 +8,21 @@ const select = document.getElementById("idBanco");
 const pesquisarConta = document.getElementById("pesquisarConta");
 const btnExportarContas = document.getElementById("btnExportarContas");
 
+// buscas iniciais
+buscarContas();
+buscarBancos();
+
+// mascaras
+$('#saldoInicial').mask('0.000.000,00', {reverse: true});
+$('#saldoAtual').mask('0.000.000,00', {reverse: true});
+$('#agencia').mask('0000-0');
+
+
+
+/* ====================================
+    EVENTOS
+ ========================================*/
+
 document.addEventListener("click", function(e) {
     const btn = e.target.closest(".editarConta");
 
@@ -30,15 +45,6 @@ pesquisarConta.addEventListener("keyup", function (e) {
 btnExportarContas.addEventListener("click", function (e) {
     exportExcel(listaContas, "contas.xlsx");
 })
-
-// mascaras
-$('#saldoInicial').mask('0.000.000,00', {reverse: true});
-$('#saldoAtual').mask('0.000.000,00', {reverse: true});
-$('#agencia').mask('0000-0');
-
-// buscas iniciais
-buscarContas();
-buscarBancos();
 
 formConta.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -67,43 +73,22 @@ formConta.addEventListener('submit', function (e) {
     
 })
 
-// buscar todos os bancos cadastrados no sistema
-function buscarBancos ()
-{
-    // faz uma requisição a api para gerar relatório mensal
-    fetch(`${URLAPI}banco/listar`, {
-        method: 'GET',
-        headers: {
-            "Authorization": `Bearer ${token}` // token no header
-        },
-        body: JSON.stringify() // só enviar body em POST/PUT/PATCH
-    })
-    .then(response => {
-        if (!response.ok)
-        {
-            // logout();
-            throw new Error(`Erro na requisição: ${response.status}`);
-        }
-        return response.json(); // converte o retorno para JSON
-    })
-    .then(data => {
-        const bancos = data;
+// excluir conta
+document.addEventListener("click", function (e) {
+    const btn = e.target.closest(".excluirConta");
 
-        bancos.forEach (banco => {
-            const option = document.createElement("option");
+    if (!btn) return;
 
-            option.value = banco.ID_BANCO;
-            option.textContent = banco.NOME;
+    if (!confirm('Deseja realmente excluir esta conta?')) return;
 
-            select.appendChild(option);
-        })
+    excluirConta(btn.dataset.id);
+});
 
-        // POPULAR SELECT
-    })
-    .catch(error => {
-        console.log("Error: ", error.message);
-    })
-}
+
+
+/* =========================
+   API
+========================= */
 
 // buscar todas as contas do usuário
 function buscarContas (filtros = {})
@@ -262,6 +247,78 @@ function editarConta (data)
     });
 }
 
+function excluirConta(id) {
+    document.getElementById("loadingScreen").classList.remove("hidden");
+
+    fetch(url + `deletar/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    .then(async r => {
+        if (!r.ok) {
+            const erro = await r.json();
+            throw new Error(erro.message);
+        }
+        return r.json();
+    })
+    .then( data => {
+        showToast("success", "Sucesso", data.message);
+        buscarContas();
+        buscarBancos();
+    })
+    .catch(err => {
+        showToast("error", "Erro", err.message);
+    })
+    .finally(() => {
+        document.getElementById("loadingScreen").classList.add("hidden");
+    });
+}
+
+
+/* =========================
+   AUXILIARES
+========================= */
+
+// buscar todos os bancos cadastrados no sistema
+function buscarBancos ()
+{
+    // faz uma requisição a api para gerar relatório mensal
+    fetch(`${URLAPI}banco/listar`, {
+        method: 'GET',
+        headers: {
+            "Authorization": `Bearer ${token}` // token no header
+        },
+        body: JSON.stringify() // só enviar body em POST/PUT/PATCH
+    })
+    .then(response => {
+        if (!response.ok)
+        {
+            // logout();
+            throw new Error(`Erro na requisição: ${response.status}`);
+        }
+        return response.json(); // converte o retorno para JSON
+    })
+    .then(data => {
+        const bancos = data;
+
+        bancos.forEach (banco => {
+            const option = document.createElement("option");
+
+            option.value = banco.ID_BANCO;
+            option.textContent = banco.NOME;
+
+            select.appendChild(option);
+        })
+
+        // POPULAR SELECT
+    })
+    .catch(error => {
+        console.log("Error: ", error.message);
+    })
+}
+
 // montar a tabela de contas
 function montarTabela (dados)
 {
@@ -279,6 +336,7 @@ function montarTabela (dados)
                                 '<td class="px-4 py-2">'+ toBR(dados[d].SALDO_ATUAL) +'</td>'+
                                 '<td class="px-4 py-2">'+
                                     '<a href="#" data-id="'+ dados[d].ID_CONTA +'" data-titulo="Editar Conta" data-modo="editar" class="text-emerald-700 hover:underline openModalBtn editarConta">Editar</a>'+
+                                    '<a href="#" data-id="'+ dados[d].ID_CONTA +'" data-titulo="Excluir Conta" class="text-red-600 ml-2 hover:underline excluirConta">Excluir</a>'+
                                 '</td>'+
                             '</tr>';
     }
@@ -293,6 +351,12 @@ function preencherForm (dados)
     document.getElementById('saldoInicial').value = toBR(dados.SALDO_INICIAL);
     document.getElementById('saldoAtual').value = toBR(dados.SALDO_ATUAL);
 }
+
+
+/* =========================
+   HELPERS
+========================= */
+
 function toBR (valor)
 {
     valor = parseFloat(valor);

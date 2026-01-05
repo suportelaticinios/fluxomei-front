@@ -13,6 +13,7 @@ btnExportPdf.addEventListener('click', () => exportarRelatorio('pdf'));
 
 const selectTipoRelatorio = document.getElementById('tipo-relatorio');
 const filtroConta = document.getElementById('filtro-conta');
+const selectConta = document.getElementById('conta');
 const filtrosAvancado = document.getElementById('filtros-avancados');
 
 selectTipoRelatorio.addEventListener('change', () =>
@@ -34,6 +35,17 @@ selectTipoRelatorio.addEventListener('change', () =>
         document.getElementById('conta').value = '';
     }
 });
+
+/**
+ * LIMPAR INDICARORES AO MUDAR DE CONTA
+ */
+selectConta.addEventListener('change', () => 
+{
+    // limpar indicadores e tabela
+    document.getElementById('indicadores').classList.add('hidden');
+    document.getElementById('previa-relatorios').classList.add('hidden');
+})
+
 
 let filtrosAtuais = {};
 
