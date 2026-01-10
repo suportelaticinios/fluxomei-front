@@ -49,5 +49,5 @@
           </button>
 
           <div class="text-lg font-semibold">Área do Usuário</div>
-          <div class="text-sm">Usuário: <span id="user-name">Fulano</span></div>
+          <div class="text-sm hidden md:block">Usuário: <span id="user-name"></span></div>
         </header>

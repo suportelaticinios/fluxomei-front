@@ -11,8 +11,8 @@
   <!-- CONTEÚDO -->
   <main class="p-6" id="page-content">
         <div class="bg-white p-6 rounded-2xl shadow-sm w-full">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-lg font-semibold mb-4">Contas</h2>
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                <h2 class="text-lg text-center md:text-right font-semibold mb-4">Contas</h2>
                 <div class="space-x-2">
                     <button data-titulo="Nova Conta" data-modo="criar" id="openModalBtn" class="bg-emerald-800 openModalBtn text-white px-4 py-2 rounded hover:bg-emerald-700">Nova conta</button>
                     <button id="btnExportarContas" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">Exportar CSV</button>
@@ -20,7 +20,7 @@
             </div>
       
             <!-- Filtros -->
-            <div class="flex flex-wrap gap-4 mb-4">
+            <div class="flex flex-col md:flex-row md:flex-wrap gap-4 mb-4">
               <div>
                   <label class="block text-sm text-gray-600 mb-1">Selecione o campo</label>
                   <select name="" id="coluna" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-700">

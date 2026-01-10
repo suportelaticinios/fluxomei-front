@@ -23,11 +23,11 @@
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
     <!-- ENTRADAS / DESPESAS / MOVIMENTAÇÕES -->
-    <div class="col-span-2 fade-up">
+    <div class="md:col-span-2 fade-up">
       <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
         <h2 class="text-lg font-semibold mb-4">Movimentações do Mês</h2>
 
-        <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="grid md:grid-cols-2 gap-4 mb-4">
           <div class="p-4 bg-emerald-50 rounded-lg shadow-sm">
             <div class="text-sm text-gray-500">Entradas (mês)</div>
             <div class="text-2xl font-bold text-emerald-600" id="totalEntradas"></div>
@@ -40,7 +40,7 @@
 
         <h3 class="font-semibold mb-2">Últimas Movimentações</h3>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid md:grid-cols-2 gap-4">
           <div>
             <h4 class="text-sm font-medium text-gray-600">Entradas</h4>
             <ul class="mt-2 space-y-2" id="ultimasEntradas">
