@@ -47,6 +47,7 @@
                       <th class="px-4 py-2">Nº da Conta</th>
                       <th class="px-4 py-2">Saldo Inicial</th>
                       <th class="px-4 py-2">Saldo Atual</th>
+                      <th class="px-4 py-2">Tipo</th>
                       <th class="px-4 py-2">Ação</th>
                     </tr>
                   </thead>
@@ -69,26 +70,60 @@
       <!-- Corpo do modal -->
       <div class="p-4 space-y-4"> 
         <div>
+            <label class="block text-sm text-gray-600 mb-1">Tipo de Conta</label>
+            <select id="tipo" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+                <option>Selecione um tipo de conta</option>                
+                <option value="CONTA">Conta</option>                
+                <option value="CARTAO">Cartão</option>                
+            </select>
+        </div>   
+
+        <!-- TIPO CONTA -->
+        <div class="w-full hidden" id="tipoConta">
+          <div>
             <label class="block text-sm text-gray-600 mb-1">Banco</label>
             <select id="idBanco" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
                 <option>Selecione uma banco</option>                
             </select>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Agência</label>
+            <input id="agencia" type="text" placeholder="Ex: 0119-6" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Nº da Conta</label>
+            <input id="conta" type="text" placeholder="Ex: 568745-6" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Saldo Inicial (R$)</label>
+            <input id="saldoInicial" type="text" step="0.01" placeholder="0,00" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Saldo Atual (R$)</label>
+            <input id="saldoAtual" type="text" step="0.01" placeholder="0,00" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+          </div>
         </div>
-        <div>
-          <label class="block text-sm text-gray-600 mb-1">Agência</label>
-          <input id="agencia" type="text" placeholder="Ex: 0119-6" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
-        </div>
-        <div>
-          <label class="block text-sm text-gray-600 mb-1">Nº da Conta</label>
-          <input id="conta" type="text" placeholder="Ex: 568745-6" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
-        </div>
-        <div>
-          <label class="block text-sm text-gray-600 mb-1">Saldo Inicial (R$)</label>
-          <input id="saldoInicial" type="text" step="0.01" placeholder="0,00" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
-        </div>
-        <div>
-          <label class="block text-sm text-gray-600 mb-1">Saldo Atual (R$)</label>
-          <input id="saldoAtual" type="text" step="0.01" placeholder="0,00" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+
+        <!-- TIPO CARTÃO -->
+        <div class="w-full hidden" id="tipoCartao">
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Selecione uma Conta</label>
+            <select id="idConta" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+                <option>Selecione uma conta</option>                
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Dia do fechamento fatura</label>
+            <input id="diaFechamento" type="number" step="1" placeholder="1" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Dia do vencimento fatura</label>
+            <input id="diaVencimento" type="number" step="1" placeholder="1" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Limite de Crédito (R$)</label>
+            <input id="limiteCredito" type="text" step="0.01" placeholder="0,00" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-700">
+          </div>
         </div>
       </div>
 

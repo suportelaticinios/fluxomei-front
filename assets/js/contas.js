@@ -7,6 +7,7 @@ const formConta = document.getElementById('formConta');
 const select = document.getElementById("idBanco");
 const pesquisarConta = document.getElementById("pesquisarConta");
 const btnExportarContas = document.getElementById("btnExportarContas");
+const tipoConta = document.getElementById('tipo');
 
 // buscas iniciais
 buscarContas();
@@ -15,6 +16,7 @@ buscarBancos();
 // mascaras
 $('#saldoInicial').mask('0.000.000,00', {reverse: true});
 $('#saldoAtual').mask('0.000.000,00', {reverse: true});
+$('#limiteCredito').mask('0.000.000,00', {reverse: true});
 $('#agencia').mask('0000-0');
 
 
@@ -48,29 +50,40 @@ btnExportarContas.addEventListener("click", function (e) {
 
 formConta.addEventListener('submit', function (e) {
     e.preventDefault();
+    document.getElementById('tipo').disabled = false;
 
     // vericiando se a operação é de inserção ou alteração
     if (modo === 'criar')
     {
         cadastrarConta({
             'id_banco': document.getElementById('idBanco').value,
+            'id_conta': document.getElementById('idConta').value,
             'agencia': document.getElementById('agencia').value,
             'numero_conta': document.getElementById('conta').value,
+            'dia_fechamento': document.getElementById('diaFechamento').value,
+            'dia_vencimento': document.getElementById('diaVencimento').value,
             'saldo_inicial': document.getElementById('saldoInicial').value,
-            'saldo_atual': document.getElementById('saldoAtual').value
+            'saldo_atual': document.getElementById('saldoAtual').value,
+            'limite_credito': document.getElementById('limiteCredito').value,
+            'tipo': document.getElementById('tipo').value,
         })
     } else if (modo == 'editar')
     {
         editarConta({
             'id_conta': idConta,
+            'fk_conta': document.getElementById('idConta').value,
             'id_banco': document.getElementById('idBanco').value,
             'agencia': document.getElementById('agencia').value,
             'numero_conta': document.getElementById('conta').value,
+            'dia_fechamento': document.getElementById('diaFechamento').value,
+            'dia_vencimento': document.getElementById('diaVencimento').value,
             'saldo_inicial': document.getElementById('saldoInicial').value,
-            'saldo_atual': document.getElementById('saldoAtual').value
+            'saldo_atual': document.getElementById('saldoAtual').value,
+            'limite_credito': document.getElementById('limiteCredito').value,
+            'tipo': document.getElementById('tipo').value,
         })
     }
-    
+    document.getElementById('tipo').disabled = true;
 })
 
 // excluir conta
@@ -83,6 +96,10 @@ document.addEventListener("click", function (e) {
 
     excluirConta(btn.dataset.id);
 });
+
+tipoConta.addEventListener("change", function (e) {
+    alternarTiposDeConta(this.value);
+})
 
 
 
@@ -124,6 +141,23 @@ function buscarContas (filtros = {})
         // console.log("Sucesso: ", data);
         montarTabela(data);
         listaContas = data;
+
+        const contas = data;
+        var selectContas = document.getElementById('idConta');
+
+        selectContas.innerHTML = '';
+        contas.forEach (conta => {
+
+            if (conta.TIPO != 'CARTAO')
+            {
+                const option = document.createElement("option");
+
+                option.value = conta.ID_CONTA;
+                option.textContent = `${conta.NUMERO_CONTA} - ${toBR(conta.SALDO_ATUAL)}`;
+
+                selectContas.appendChild(option);
+            }            
+        })
     })
     .catch(error => {
         console.log("Error: ", error.message);
@@ -334,6 +368,7 @@ function montarTabela (dados)
                                 '<td class="px-4 py-2">'+ dados[d].NUMERO_CONTA +'</td>'+
                                 '<td class="px-4 py-2">'+ toBR(dados[d].SALDO_INICIAL) +'</td>'+
                                 '<td class="px-4 py-2">'+ toBR(dados[d].SALDO_ATUAL) +'</td>'+
+                                '<td class="px-4 py-2">'+ dados[d].TIPO+'</td>'+
                                 '<td class="px-4 py-2">'+
                                     '<a href="#" data-id="'+ dados[d].ID_CONTA +'" data-titulo="Editar Conta" data-modo="editar" class="text-emerald-700 hover:underline openModalBtn editarConta">Editar</a>'+
                                     '<a href="#" data-id="'+ dados[d].ID_CONTA +'" data-titulo="Excluir Conta" class="text-red-600 ml-2 hover:underline excluirConta">Excluir</a>'+
@@ -345,11 +380,31 @@ function montarTabela (dados)
 // preencher o formulárioe com os dados
 function preencherForm (dados)
 {
-    document.getElementById('idBanco').value = dados.FK_CONTA_BANCO;
-    document.getElementById('agencia').value = dados.AGENCIA;
-    document.getElementById('conta').value = dados.NUMERO_CONTA;
-    document.getElementById('saldoInicial').value = toBR(dados.SALDO_INICIAL);
-    document.getElementById('saldoAtual').value = toBR(dados.SALDO_ATUAL);
+    document.getElementById('tipo').value = dados.TIPO;
+    document.getElementById('tipo').disabled = true;
+
+    alternarTiposDeConta(dados.TIPO);
+
+    if (dados.TIPO === 'CONTA')
+    {
+        limparDadosCartao();
+
+        document.getElementById('idBanco').value = dados.FK_CONTA_BANCO;
+        document.getElementById('agencia').value = dados.AGENCIA;
+        document.getElementById('conta').value = dados.NUMERO_CONTA;
+        document.getElementById('saldoInicial').value = toBR(dados.SALDO_INICIAL);
+        document.getElementById('saldoAtual').value = toBR(dados.SALDO_ATUAL);
+    } 
+
+    if (dados.TIPO === 'CARTAO')
+    {
+        limparDadosConta();
+
+        document.getElementById('idConta').value = dados.FK_CONTA_CARTAO;
+        document.getElementById('diaFechamento').value = dados.DIA_FECHAMENTO;
+        document.getElementById('diaVencimento').value = dados.DIA_VENCIMENTO;
+        document.getElementById('limiteCredito').value = toBR(dados.LIMITE_CREDITO);
+    }    
 }
 
 
@@ -369,4 +424,36 @@ function toBR (valor)
 function dataFormatadaBR(data) {
     const [ano, mes, dia] = data.split("-");
     return `${dia}/${mes}/${ano}`;
+}
+function alternarTiposDeConta (valor)
+{
+    // buscarContas();
+
+    if (valor === 'CONTA')
+    {
+        document.getElementById("tipoConta").classList.remove('hidden');
+        document.getElementById("tipoCartao").classList.add('hidden');
+
+        limparDadosCartao();
+    } else {
+        document.getElementById("tipoCartao").classList.remove('hidden');
+        document.getElementById("tipoConta").classList.add('hidden');
+
+        limparDadosConta();
+    }
+}
+function limparDadosCartao ()
+{
+    document.getElementById('idConta').value = null;
+    document.getElementById('diaFechamento').value = null;
+    document.getElementById('diaVencimento').value = null;
+    document.getElementById('limiteCredito').value = null;
+}
+function limparDadosConta ()
+{
+    document.getElementById('agencia').value = null;
+    document.getElementById('conta').value = null;
+    document.getElementById('saldoInicial').value = null;
+    document.getElementById('saldoAtual').value = null;
+    document.getElementById('idBanco').value = null;
 }
