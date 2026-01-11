@@ -6,6 +6,7 @@ const selectContas = document.getElementById("conta");
 const selectCategoria = document.getElementById("categoria");
 const pesquisarDespesa = document.getElementById("pesquisarDespesa");
 const btnExportarDespesas = document.getElementById("btnExportarDespesas");
+const modalide = document.getElementById("modalidade");
 
 var modo = 'criar';
 var idDespesa = null;
@@ -60,7 +61,8 @@ formDespesa.addEventListener('submit', function (e) {
             'id_categoria': document.getElementById('categoria').value,
             'descricao': document.getElementById('descricao').value,
             'valor': document.getElementById('valor').value,
-            'data': document.getElementById('data').value
+            'data': document.getElementById('data').value,
+            'modalidade': document.getElementById('modalidade').value
         })
     } else if (modo == 'editar')
     {
@@ -70,7 +72,8 @@ formDespesa.addEventListener('submit', function (e) {
             'id_categoria': document.getElementById('categoria').value,
             'descricao': document.getElementById('descricao').value,
             'valor': document.getElementById('valor').value,
-            'data': document.getElementById('data').value
+            'data': document.getElementById('data').value,
+            'modalidade': document.getElementById('modalidade').value
         })
     }
 })
@@ -86,6 +89,27 @@ document.addEventListener("click", function (e) {
     excluirDespesa(btn.dataset.id);
 });
 
+selectContas.addEventListener('change', function (e) {
+    
+    modalide.value = '';
+
+    const indiceSelecionado = this.selectedIndex;
+    const optionSelecionado = this.options[indiceSelecionado];
+
+    const option = {
+        'CARTAO': true,
+        'CONTA' : false
+    }
+
+    if (option[optionSelecionado.dataset.modalide] === true)
+    {
+        modalide.value = "CREDITO";
+    } else {
+        modalide.value = "DEBITO";
+    }
+
+    exibirModalidade(option[optionSelecionado.dataset.modalide]);
+})
 
 /* =========================
    API
@@ -314,16 +338,23 @@ function buscarContas()
 
         selectContas.appendChild(primeiroOption);
 
+        // POPULAR SELECT
         contas.forEach (conta => {
             const option = document.createElement("option");
 
             option.value = conta.ID_CONTA;
-            option.textContent = `${conta.AGENCIA} - ${conta.NUMERO_CONTA} - ${toBR(conta.SALDO_ATUAL)}` ;
+            option.dataset.modalide = conta.TIPO;
+
+            // VERIFICANDO SE A CONTA É DO TIPO CARTÃO
+            if (conta.TIPO === 'CARTAO')
+            {
+                option.textContent = `Cartão - ${toBR(conta.SALDO_ATUAL)}` ;
+            } else {
+                option.textContent = `${conta.AGENCIA} - ${conta.NUMERO_CONTA} - ${toBR(conta.SALDO_ATUAL)}` ;
+            }
 
             selectContas.appendChild(option);
-        })
-
-        // POPULAR SELECT
+        })       
     })
     .catch(error => {
         console.log("Error: ", error.message);
@@ -399,7 +430,15 @@ function preencherForm (dados)
     document.getElementById('conta').value = dados.FK_DESPESA_CONTA;
     document.getElementById('categoria').value = dados.FK_DESPESA_CATEGORIA;
     document.getElementById('descricao').value = dados.DESCRICAO;
-    document.getElementById('valor').value = toBR(dados.VALOR);
+    document.getElementById('valor').value = toBR(dados.VALOR);  
+
+    const event = new Event('change', {bubbles: true});
+    const option = {
+        'CARTAO': true,
+        'CONTA' : false
+    }
+    selectContas.dispatchEvent(event);
+    document.getElementById('modalidade').value = dados.TIPO;
 }
 
 
@@ -419,4 +458,14 @@ function toBR (valor)
 function dataFormatadaBR(data) {
     const [ano, mes, dia] = data.split("-");
     return `${dia}/${mes}/${ano}`;
+}
+function exibirModalidade (valor )
+{
+    if (valor === true) {
+        document.getElementById('modalidadeBloco').classList.remove('hidden');
+        return;
+    }
+
+    document.getElementById('modalidadeBloco').classList.add('hidden');
+    return;
 }

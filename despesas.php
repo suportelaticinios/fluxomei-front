@@ -60,26 +60,6 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y">
-                    <tr class="hover:bg-gray-50">
-                      <td class="px-4 py-2">1</td>
-                      <td class="px-4 py-2">03/11/2025</td>
-                      <td class="px-4 py-2">Nubank</td>
-                      <td class="px-4 py-2">21584-3</td>
-                      <td class="px-4 py-2">Ifood</td>
-                      <td class="px-4 py-2">Compra de delivery</td>
-                      <td class="px-4 py-2 text-red-700 font-semibold">R$ 35,00</td>
-                      <td class="px-4 py-2"><a href="#" class="text-red-700 hover:underline">Editar</a></td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                      <td class="px-4 py-2">2</td>
-                      <td class="px-4 py-2">10/11/2025</td>
-                      <td class="px-4 py-2">Inter</td>
-                      <td class="px-4 py-2">85624-5</td>
-                      <td class="px-4 py-2">Outras</td>
-                      <td class="px-4 py-2">Compra de bolo no pote</td>
-                      <td class="px-4 py-2 text-red-700 font-semibold">R$ 21,90</td>
-                      <td class="px-4 py-2"><a href="#" class="text-red-700 hover:underline">Editar</a></td>
-                    </tr>
                   </tbody>
                 </table>
             </div>
@@ -107,10 +87,18 @@
                 <option>Selecione uma conta</option>                
             </select>
         </div>
+        <div id="modalidadeBloco" class="hidden">
+            <label class="block text-sm text-gray-600 mb-1">Modalidade</label>
+            <select id="modalidade" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-700">
+                <option value="">Selecione uma modalidade</option>    
+                <option value="DEBITO">Débito</option>            
+                <option value="CREDITO">Crédito</option>            
+            </select>
+        </div>
         <div>
             <label class="block text-sm text-gray-600 mb-1">Categoria</label>
             <select id="categoria" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-700">
-                <option>Selecione uma categoria</option>                
+                <option value="">Selecione uma categoria</option>                
             </select>
         </div>
         <div>
