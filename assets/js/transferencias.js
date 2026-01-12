@@ -16,7 +16,9 @@ var idTransferencia = null;
 
 // INIT
 buscarTransferencias();
-buscarContas();
+buscarContas({
+    'tipo': 'CONTA'
+});
 buscarCategorias();
 
 // máscara
@@ -152,8 +154,19 @@ function excluirTransferencia(id) {
    AUXILIARES
 ========================= */
 
-function buscarContas() {
-    fetch(`${URLAPI}conta/listar`, {
+function buscarContas(filtros = {}) {
+    // remove filtros vazios
+    const params = new URLSearchParams();
+
+    for (const chave in filtros) {
+        if (filtros[chave] !== "" && filtros[chave] !== null && filtros[chave] !== undefined) {
+            params.append(chave, filtros[chave]);
+        }
+    }
+
+    const urlFinal = URLAPI + "conta/listar?" + params.toString();
+
+    fetch(urlFinal, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}`
