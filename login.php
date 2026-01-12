@@ -27,8 +27,11 @@
                 <button id="btnLogin" type="submit" class="w-full bg-emerald-600 text-white py-2 rounded">Entrar</button>
             </form>
             <p class="text-sm text-gray-600 mt-4 text-center">
+                Esqueceu sua senha? <a href="esqueci-minha-senha.php" class="text-emerald-600 font-semibold hover:underline">Clique aqui!</a>
+            </p>
+            <p class="text-sm text-gray-600 mt-4 text-center">
                 Ainda não possui uma conta? <a href="cadastre-se.php" class="text-emerald-600 font-semibold hover:underline">Cadastre-se aqui!</a>
-              </p>
+            </p>
         </div>
     </div>
 
