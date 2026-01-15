@@ -128,7 +128,7 @@ $planoSelecionado = (!empty($_GET['plano'])) ? htmlspecialchars($_GET['plano']) 
         </div>
 
         <!-- dados do cartão -->
-        <div id="pagamentoCartao" class="space-y-3 hidden border-t pt-4 mt-4">
+        <!-- <div id="pagamentoCartao" class="space-y-3 hidden border-t pt-4 mt-4">
 
           <h2 class="text-lg font-semibold text-gray-700">Pagamento</h2>
 
@@ -156,9 +156,7 @@ $planoSelecionado = (!empty($_GET['plano'])) ? htmlspecialchars($_GET['plano']) 
             </div>
           </div>
 
-        </div>
-
-
+        </div> -->
 
         <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded font-medium hover:bg-emerald-700 transition">Cadastrar</button>
       </form>
@@ -186,6 +184,7 @@ $planoSelecionado = (!empty($_GET['plano'])) ? htmlspecialchars($_GET['plano']) 
   <script src="<?=URL?>assets/js/jquery.js"></script>
   <script src="<?=URL?>assets/js/jquerymask.js"></script>
   <script src="<?=URL?>assets/js/script.js"></script>  
+  <script src="<?=URL?>assets/js/config.js"></script>  
   <script src="<?=URL?>assets/js/cadastre-se.js"></script>  
 </body>
 </html>

@@ -39,7 +39,7 @@ function cadastrarSe(dados) {
 
     document.getElementById("loadingScreen").classList.remove("hidden");
 
-    fetch('https://api.smlaticinios.com.br/api-fluxomei/usuario/cadastrar', {
+    fetch(URLAPI + 'usuario/cadastrar', {
         method: 'POST',
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -82,15 +82,6 @@ radios.forEach(radio => {
     });
 });
 
-$('#idPlano').on('change', function () {
-    if ($(this).val() == 2) {
-      $('#pagamentoCartao').removeClass('hidden');
-      $('#enderecoCobranca').removeClass('hidden');
-    } else {
-      $('#pagamentoCartao').addClass('hidden');
-      $('#enderecoCobranca').addClass('hidden');
-    }
-});
 
 // $('#formCadastro').on('submit', function (e) {
 //     e.preventDefault();

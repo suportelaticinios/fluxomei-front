@@ -207,7 +207,7 @@
       Planos
     </h3>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center" id="planosGrid">
 
       <!-- Plano Grátis -->
       <div class="bg-white p-8 rounded-xl shadow-lg text-center animate-fadeIn">
@@ -288,5 +288,7 @@
     © 2025 FluxoMEI — Todos os direitos reservados.
   </footer>
 
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/index.js"></script>
 </body>
 </html>
