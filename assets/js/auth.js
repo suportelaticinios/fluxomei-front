@@ -55,7 +55,7 @@ function limparSessao() {
 /**
  * TRIAL DE TESTE
  */
- function exibirAvisoTrial(data) {
+ function exibirAvisoTrial(dias) {
     if (document.getElementById('trial-banner')) return;
 
     if (!document.body) {
@@ -75,7 +75,7 @@ function limparSessao() {
             font-weight:500;
         ">
             🚀 Você está em período de teste.
-            Restam <strong>${data.dias_restantes}</strong> dias.
+            Restam <strong>${dias}</strong> dias.
             <a href="${URLBASE}configuracoes" style="margin-left:8px;text-decoration:underline;">
                 Fazer upgrade agora
             </a>
