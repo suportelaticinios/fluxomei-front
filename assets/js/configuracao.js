@@ -8,7 +8,6 @@ var tbCobrancas = document.getElementById('tabela-cobrancas').querySelector('tbo
 
 // máscara do campo de telefone
 $('#telefone').mask('(00) 00000-0000');
-$('#card_expiry').mask('00/00');
 
 /**
  * EVENTOS
@@ -39,7 +38,8 @@ document.addEventListener('submit', async (e) => {
     'nome_cartao': document.getElementById('card_name').value,
     'numero_cartao': document.getElementById('card_number').value,
     'vencimento_cartao': document.getElementById('card_expiry').value,
-    'cvv_cartao': document.getElementById('card_cvv').value
+    'cvv_cartao': document.getElementById('card_cvv').value,
+    'plano_pretendido': document.getElementById('plano_pretendido').value
   })
 });
 
@@ -163,6 +163,9 @@ function salvarCartao (dados)
     })
     .then(data => {
         showToast("success", "Sucesso", data.message);
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000)
     })
     .catch(error => {
         console.log("Error: ", error.message);
@@ -306,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function preencherPlano(data) {
     document.querySelector('#assinatura [data-plano-nome]').innerText = data.plano.nome;
     document.querySelector('#assinatura [data-plano-valor]').innerText =
-        `R$ ${toBR(data.plano.valor)} / ${data.plano.periodicidade}`;
+        ` ${toBR(data.plano.valor)} / ${data.plano.periodicidade}`;
 
     const statusEl = document.querySelector('#assinatura [data-plano-status]');
     statusEl.innerText = data.assinatura.status === 'ATIVA' ? 'Ativo' : 'Inativo';

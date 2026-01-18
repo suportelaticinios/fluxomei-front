@@ -271,9 +271,6 @@
   .left-1\/2 {
     left: calc(1/2 * 100%);
   }
-  .z-40 {
-    z-index: 40;
-  }
   .z-50 {
     z-index: 50;
   }
@@ -1003,6 +1000,11 @@
   .ease-out {
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
+  }
+  .\*\:w-full {
+    :is(& > *) {
+      width: 100%;
+    }
   }
   .hover\:border-blue-600 {
     &:hover {

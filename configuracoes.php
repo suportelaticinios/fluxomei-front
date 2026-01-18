@@ -59,7 +59,7 @@
             </div>
 
             <!-- SEM CARTÃO -->
-            <div id="sem-cartao" class="hidden">
+            <div id="sem-cartao" class="hidden border border-gray-200 rounded-xl p-5 mb-4">
                 <p class="text-sm text-gray-600 mb-3">
                     Nenhuma forma de pagamento cadastrada.
                 </p>
@@ -74,7 +74,7 @@
             </div>
 
             <!-- COM CARTÃO -->
-            <div id="com-cartao" class="hidden flex items-center justify-between flex-wrap gap-4">
+            <div id="com-cartao" class="hidden flex items-center justify-between flex-wrap gap-4 border border-gray-200 rounded-xl p-5 mb-4">
                 <div class="text-sm text-gray-600">
                     Visa •••• 4242 <br>
                     <span class="text-xs text-gray-400">Validade 08/2027</span>
@@ -177,12 +177,28 @@
 <!-- TEMPLATE: CARTÃO -->
 <template id="tpl-cartao">
   <form id="formCartao" class="space-y-3">
-    <input type="text" id="card_name" placeholder="Nome no cartão" class="input" required>
-    <input type="number" id="card_number" placeholder="Número do cartão" class="input">
+    <select name="plano_pretendido" id="plano_pretendido" 
+    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        <option value="">Escolha um plano</option>
+    </select>
 
     <div class="flex gap-2">
-      <input type="month" id="card_expiry" placeholder="MM/AA" class="input w-1/2">
-      <input type="number" id="card_cvv" placeholder="CVV" class="input w-1/2">
+        <input type="text" id="card_name" placeholder="Nome no cartão" 
+        class="input w-1/2 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+
+        <input type="text" id="card_number" placeholder="Número do cartão" 
+        class="input w-1/2 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>    
+
+    <div class="flex gap-2">
+      <input type="text" id="card_expiry" placeholder="MM/AA" 
+      class="input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <input type="number" id="card_cvv" placeholder="CVV" 
+      class="input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
+    <div class="flex hidden justify-end border border-gray-300 p-2 rounded-lg" id="infoPlano">
+        <span id="valorPlano" class="text-emerald-600 font-bold">R$ 29,90</span>
     </div>
 
     <div class="flex justify-end gap-2 pt-4">
@@ -192,32 +208,38 @@
   </form>
 </template>
 
+
+<script src="<?=URL?>assets/js/jquery.js"></script>
+<script src="<?=URL?>assets/js/jquerymask.js"></script>
+<script src="<?=URL?>assets/js/script.js"></script>
+<script src="<?=URL?>assets/js/configuracao.js"></script>
+
 <script>
-  const tabButtons  = document.querySelectorAll('.tab-btn');
-  const tabContents = document.querySelectorAll('.tab-content');
+    const tabButtons  = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
 
-  function ativarTab(tabId) {
-    // remove destaque de todas
-    tabButtons.forEach(btn => {
-      btn.classList.remove('text-blue-600', 'border-blue-600');
-    });
+    function ativarTab(tabId) {
+        // remove destaque de todas
+        tabButtons.forEach(btn => {
+        btn.classList.remove('text-blue-600', 'border-blue-600');
+        });
 
-    // esconde todos os conteúdos
-    tabContents.forEach(content => {
-      content.classList.add('hidden');
-    });
+        // esconde todos os conteúdos
+        tabContents.forEach(content => {
+        content.classList.add('hidden');
+        });
 
-    // destaca o botão ativo
-    const btnAtivo = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
-    if (btnAtivo) {
-      btnAtivo.classList.add('text-blue-600', 'border-blue-600');
-    }
+        // destaca o botão ativo
+        const btnAtivo = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+        if (btnAtivo) {
+        btnAtivo.classList.add('text-blue-600', 'border-blue-600');
+        }
 
-    // mostra o conteúdo ativo
-    const conteudoAtivo = document.getElementById(tabId);
-    if (conteudoAtivo) {
-      conteudoAtivo.classList.remove('hidden');
-    }
+        // mostra o conteúdo ativo
+        const conteudoAtivo = document.getElementById(tabId);
+        if (conteudoAtivo) {
+        conteudoAtivo.classList.remove('hidden');
+        }
   }
 
   // clique nas abas
@@ -232,10 +254,5 @@
     ativarTab(tabButtons[0].dataset.tab);
   }
 </script>
-
-<script src="<?=URL?>assets/js/jquery.js"></script>
-<script src="<?=URL?>assets/js/jquerymask.js"></script>
-<script src="<?=URL?>assets/js/script.js"></script>
-<script src="<?=URL?>assets/js/configuracao.js"></script>
 
 <?php require_once './pages/footer.php'; ?>
