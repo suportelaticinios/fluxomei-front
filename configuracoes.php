@@ -36,52 +36,59 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
                     <div>
                         <p class="text-gray-500">Plano</p>
-                        <p class="font-semibold">Pro</p>
+                        <p class="font-semibold" data-plano-nome></p>
                     </div>
 
                     <div>
                         <p class="text-gray-500">Valor</p>
-                        <p class="font-semibold">R$ 29,90 / mês</p>
+                        <p class="font-semibold" data-plano-valor></p>
                     </div>
 
                     <div>
                         <p class="text-gray-500">Status</p>
-                        <span class="inline-block bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs">
-                            Ativo
+                        <span data-plano-status
+                        class="inline-block bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs">                            
                         </span>
                     </div>
 
                     <div>
                         <p class="text-gray-500">Próxima cobrança</p>
-                        <p class="font-semibold">10/02/2026</p>
+                        <p class="font-semibold" data-plano-proxima></p>
                     </div>
                 </div>
             </div>
 
-            <!-- Cartão -->
-            <div class="border border-gray-200 rounded-xl p-5 mb-4">
-                <h3 class="text-lg font-medium text-gray-700 mb-3">💳 Forma de Pagamento</h3>
+            <!-- SEM CARTÃO -->
+            <div id="sem-cartao" class="hidden">
+                <p class="text-sm text-gray-600 mb-3">
+                    Nenhuma forma de pagamento cadastrada.
+                </p>
 
-                <div class="flex items-center justify-between flex-wrap gap-4">
-                    <div class="text-sm text-gray-600">
-                        Visa •••• 4242 <br>
-                        <span class="text-xs text-gray-400">Validade 08/2027</span>
-                    </div>
+                <button 
+                data-modal-open
+                data-modal-title="Adicionar Cartão"
+                data-modal-template="tpl-cartao"
+                class="bg-emerald-600 text-white px-5 py-2 rounded-lg text-sm hover:bg-emerald-700">
+                    ➕ Inserir cartão
+                </button>
+            </div>
 
-                    <div class="flex gap-2">
-                        <button class="px-4 py-2 text-sm rounded-lg border hover:bg-gray-50">
-                            Alterar cartão
-                        </button>
-
-                        <button class="px-4 py-2 text-sm rounded-lg border text-red-600 hover:bg-red-50">
-                            Remover
-                        </button>
-                    </div>
+            <!-- COM CARTÃO -->
+            <div id="com-cartao" class="hidden flex items-center justify-between flex-wrap gap-4">
+                <div class="text-sm text-gray-600">
+                    Visa •••• 4242 <br>
+                    <span class="text-xs text-gray-400">Validade 08/2027</span>
                 </div>
 
-                <p class="text-xs text-gray-400 mt-3">
-                    * Os dados do cartão são armazenados com segurança pelo gateway de pagamento.
-                </p>
+                <div class="flex gap-2">
+                    <button class="px-4 py-2 text-sm rounded-lg border hover:bg-gray-50">
+                    Alterar cartão
+                    </button>
+
+                    <button class="px-4 py-2 text-sm rounded-lg border text-red-600 hover:bg-red-50">
+                    Remover
+                    </button>
+                </div>
             </div>
 
             <!-- Ações -->
@@ -105,7 +112,7 @@
             <h2 class="text-lg font-medium text-gray-700 mb-3">Últimas Faturas</h2>
 
             <div class="overflow-x-auto">
-                <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+                <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden" id="tabela-cobrancas">
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">#</th>
@@ -126,7 +133,7 @@
         <div id="conta" class="tab-content hidden">
             <h2 class="text-lg font-medium text-gray-700 mb-3">Informações da Conta</h2>
 
-            <form class="space-y-4 max-w-xl">
+            <form class="space-y-4 max-w-xl" id="formContato">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Nome completo</label>
                     <input id="nome" type="text"
@@ -155,6 +162,35 @@
 
     </div>
 </main>
+
+<!-- TOAST -->
+<div id="toast" class="fixed top-6 right-6 z-[9999] hidden">
+  <div id="toastBox" class="bg-white shadow-lg border-l-4 p-4 rounded-lg min-w-[250px] flex items-start gap-3 animate-fadeIn">
+    <span id="toastIcon" class="text-xl">✔️</span>
+    <div>
+      <p id="toastTitle" class="font-semibold"></p>
+      <p id="toastMessage" class="text-sm text-gray-700"></p>
+    </div>
+  </div>
+</div>
+
+<!-- TEMPLATE: CARTÃO -->
+<template id="tpl-cartao">
+  <form id="formCartao" class="space-y-3">
+    <input type="text" id="card_name" placeholder="Nome no cartão" class="input" required>
+    <input type="number" id="card_number" placeholder="Número do cartão" class="input">
+
+    <div class="flex gap-2">
+      <input type="month" id="card_expiry" placeholder="MM/AA" class="input w-1/2">
+      <input type="number" id="card_cvv" placeholder="CVV" class="input w-1/2">
+    </div>
+
+    <div class="flex justify-end gap-2 pt-4">
+      <button type="button" data-modal-close class="btn-secondary">Cancelar</button>
+      <button type="submit" class="btn-primary">Salvar</button>
+    </div>
+  </form>
+</template>
 
 <script>
   const tabButtons  = document.querySelectorAll('.tab-btn');

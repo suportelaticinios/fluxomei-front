@@ -4,10 +4,15 @@ var email = null;
 const formContato = document.getElementById('formContato');
 var tbCobrancas = document.getElementById('tabela-cobrancas').querySelector('tbody');
 
-buscarCobrancas();
+// buscarCobrancas();
 
 // máscara do campo de telefone
 $('#telefone').mask('(00) 00000-0000');
+$('#card_expiry').mask('00/00');
+
+/**
+ * EVENTOS
+ */
 
 formContato.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -23,6 +28,25 @@ formContato.addEventListener('submit', function (e) {
       'email': email
     })
 })
+
+document.addEventListener('submit', async (e) => {
+  if (e.target.id !== 'formCartao') return;
+
+  e.preventDefault();
+
+  // lógica de cartão aqui
+  salvarCartao({
+    'nome_cartao': document.getElementById('card_name').value,
+    'numero_cartao': document.getElementById('card_number').value,
+    'vencimento_cartao': document.getElementById('card_expiry').value,
+    'cvv_cartao': document.getElementById('card_cvv').value
+  })
+});
+
+
+/**
+ * API
+ */
 
 // buscar todas as entradas do usuário
 function buscarCobrancas (filtros = {})
@@ -104,7 +128,79 @@ function atualizar(dados) {
     });
 }
 
-// montar a tabela de contas
+// salvar cartão
+function salvarCartao (dados)
+{
+     let token = localStorage.getItem('token');
+
+    document.getElementById("loadingScreen").classList.remove("hidden");
+
+    fetch(URLAPI + '/configuracao/salvarCartao/', {
+        method: 'POST',
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(dados)
+    })
+    .then(async response => {
+        if (!response.ok) {
+            const erro = await response.json();
+
+            if (response.status === 401) {
+                showToast("error", "Não autorizado", erro.message || "Token inválido ou expirado.");
+            }
+
+            if (response.status === 400) {
+                console.log(erro.data.errors[0]);
+                showToast("error", "Atenção", erro.data.errors[0].description);
+            }
+
+            throw new Error(erro.data.errors[0].description || "Erro desconhecido");
+        }
+
+        return response.json();
+    })
+    .then(data => {
+        showToast("success", "Sucesso", data.message);
+    })
+    .catch(error => {
+        console.log("Error: ", error.message);
+        showToast("error", "Atenção", error.message);
+    })
+    .finally(() => {
+        // só aqui o loading some — DEPOIS de TUDO terminar
+        document.getElementById("loadingScreen").classList.add("hidden");
+    });
+}
+
+// carregar informações da assinatura
+async function carregarAssinatura() {
+    const token = localStorage.getItem('token');
+
+    const res = await fetch(URLAPI + '/configuracao/assinaturaStatus', {
+        headers: {
+        "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if (!res.ok) {
+        showToast("error", "Erro", "Não foi possível carregar a assinatura");
+        return;
+    }
+
+    const data = await res.json();
+
+    preencherPlano(data);
+    renderPagamento(data.cartao);
+}
+
+
+
+/** 
+ * HELPERS
+*/
+// montar a tabela de faturas
 function montarTabela (dados)
 {
     tbCobrancas.innerHTML = '';  
@@ -172,4 +268,49 @@ function setarCampos (dados)
     document.getElementById("telefone").value = dados.TELEFONE;
     cpf_cnpj = dados.CPF_CNPJ
     email = dados.EMAIL
+}
+
+// mostrar inserir ou alterar cartão
+function renderPagamento(cartao) {
+    const semCartao = document.getElementById('sem-cartao');
+    const comCartao = document.getElementById('com-cartao');
+
+    semCartao.classList.add('hidden');
+    comCartao.classList.add('hidden');
+
+    if (!cartao || !cartao.has_card) {
+        semCartao.classList.remove('hidden');
+        return;
+    }
+
+    comCartao.classList.remove('hidden');
+
+    comCartao.querySelector('.text-sm').innerHTML = `
+        ${cartao.brand} •••• ${cartao.last4} <br>
+        <span class="text-xs text-gray-400">Validade ${cartao.expiry}</span>
+    `;
+}
+
+// capturando evendo disparado pelo auth.js carregado no header
+document.addEventListener('DOMContentLoaded', () => {
+  if (!window.USER) return;
+
+  const acesso = window.USER.acesso;
+
+  renderPagamento(acesso);
+  carregarAssinatura();
+  return;
+});
+
+// preenche o bloco plano atual
+function preencherPlano(data) {
+    document.querySelector('#assinatura [data-plano-nome]').innerText = data.plano.nome;
+    document.querySelector('#assinatura [data-plano-valor]').innerText =
+        `R$ ${toBR(data.plano.valor)} / ${data.plano.periodicidade}`;
+
+    const statusEl = document.querySelector('#assinatura [data-plano-status]');
+    statusEl.innerText = data.assinatura.status === 'ATIVA' ? 'Ativo' : 'Inativo';
+
+    document.querySelector('#assinatura [data-plano-proxima]')
+        .innerText = dataFormatadaBR(data.assinatura.next_due_date);
 }

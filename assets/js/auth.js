@@ -25,6 +25,8 @@ async function verificarAutenticacao() {
 
         const data = await res.json();
 
+        window.USER = data;
+
         // 🔒 Trial ou plano vencido → libera SOMENTE configuração
         if (res.status === 403) {
             if (data.code === 'TRIAL_EXPIRED' || data.code === 'PLAN_EXPIRED') {
