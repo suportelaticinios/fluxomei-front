@@ -4,7 +4,8 @@ var email = null;
 const formContato = document.getElementById('formContato');
 var tbCobrancas = document.getElementById('tabela-cobrancas').querySelector('tbody');
 
-// buscarCobrancas();
+buscarCobrancas();
+setarCampos(window.USER);
 
 // máscara do campo de telefone
 $('#telefone').mask('(00) 00000-0000');
@@ -81,7 +82,6 @@ function buscarCobrancas (filtros = {})
     .then(data => {
         // console.log("Sucesso: ", data);
         montarTabela(data.response.data);
-        setarCampos(data.dadosUsuario);
     })
     .catch(error => {
         console.log("Error: ", error.message);
@@ -214,6 +214,7 @@ function montarTabela (dados)
         let span = '';
         
         switch (dados[d]['status']) {
+            case "CONFIRMED":
             case "RECEIVED":
                 span = '<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">Pago</span>';
                 break;
@@ -238,6 +239,7 @@ function montarTabela (dados)
         }
         tbCobrancas.innerHTML += '<tr class="hover:bg-gray-50">'+
                                     '<td class="px-4 py-2 text-sm text-gray-700">'+ dados[d]['id'] +'</td>'+
+                                    '<td class="px-4 py-2 text-sm text-gray-700">'+ dataFormatadaBR(dados[d]['dateCreated']) +'</td>'+
                                     '<td class="px-4 py-2 text-sm text-gray-700">'+ dataFormatadaBR(dados[d]['originalDueDate']) +'</td>'+
                                     '<td class="px-4 py-2 text-sm text-gray-700">R$ '+ toBR(dados[d]['value']) +'</td>'+
                                     '<td class="px-4 py-2 text-sm">'+
@@ -245,7 +247,7 @@ function montarTabela (dados)
                                     '</td>'+
                                     '<td class="px-4 py-2 text-center space-x-2">'+
                                         '<a href="'+ dados[d]['invoiceUrl'] +'" target="_blank" class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-blue-200 transition">Ver detalhes</a>'+
-                                        '<a href="'+ dados[d]['bankSlipUrl'] +'" target="_blank" class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-gray-200 transition">Baixar PDF</a>'+
+                                        // '<a href="'+ dados[d]['bankSlipUrl'] +'" target="_blank" class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-gray-200 transition">Baixar PDF</a>'+
                                     '</td>'+
                                 '</tr>';
     }
@@ -267,10 +269,12 @@ function dataFormatadaBR(data) {
 
 function setarCampos (dados)
 {
-    document.getElementById("nome").value = dados.NOME;
-    document.getElementById("telefone").value = dados.TELEFONE;
-    cpf_cnpj = dados.CPF_CNPJ
-    email = dados.EMAIL
+    console.log(dados);
+
+    document.getElementById("nome").value = dados.nome;
+    document.getElementById("telefone").value = dados.telefone;
+    // cpf_cnpj = dados.CPF_CNPJ
+    // email = dados.EMAIL
 }
 
 // mostrar inserir ou alterar cartão

@@ -19,10 +19,10 @@
             <button class="tab-btn py-2 px-4 text-gray-600 border-b-2 border-transparent hover:text-emerald-600 hover:border-emerald-600"
                 data-tab="assinatura">Assinatura</button>
 
-            <button class="tab-btn py-2 px-4 text-gray-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600"
+            <button class="tab-btn py-2 px-4 text-gray-600 border-b-2 border-transparent hover:text-emerald-600 hover:border-emerald-600"
                 data-tab="faturas">Faturas</button>
 
-            <button class="tab-btn py-2 px-4 text-gray-600 border-b-2 border-transparent hover:text-yellow-600 hover:border-yellow-600"
+            <button class="tab-btn py-2 px-4 text-gray-600 border-b-2 border-transparent hover:text-emerald-600 hover:border-emerald-600"
                 data-tab="conta">Conta</button>
         </div>
 
@@ -116,7 +116,8 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">#</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">Data</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">Criado Em</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">Vencimento</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">Valor</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">Status</th>
                             <th class="px-4 py-2 text-center text-sm font-semibold text-gray-600 border-b">Ações</th>
@@ -218,41 +219,50 @@
     const tabButtons  = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
 
-    function ativarTab(tabId) {
+    function ativarTab(tabId) 
+    {
         // remove destaque de todas
-        tabButtons.forEach(btn => {
-        btn.classList.remove('text-blue-600', 'border-blue-600');
+        tabButtons.forEach(btn =>
+        {
+            btn.classList.remove('text-blue-600', 'border-blue-600');
+            btn.classList.remove('bg-emerald-200');
+            btn.classList.add('text-gray-600', 'border-transparent');
         });
 
         // esconde todos os conteúdos
-        tabContents.forEach(content => {
-        content.classList.add('hidden');
+        tabContents.forEach(content =>
+        {
+            content.classList.add('hidden');
         });
 
         // destaca o botão ativo
         const btnAtivo = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
-        if (btnAtivo) {
-        btnAtivo.classList.add('text-blue-600', 'border-blue-600');
+        if (btnAtivo)
+        {
+            btnAtivo.classList.remove('text-gray-600', 'border-transparent');
+            btnAtivo.classList.add('text-blue-600', 'border-blue-600');
         }
 
         // mostra o conteúdo ativo
         const conteudoAtivo = document.getElementById(tabId);
-        if (conteudoAtivo) {
-        conteudoAtivo.classList.remove('hidden');
+        if (conteudoAtivo)
+        {
+            conteudoAtivo.classList.remove('hidden');
         }
-  }
+    }
 
-  // clique nas abas
-  tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      ativarTab(button.dataset.tab);
+    // clique nas abas
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => 
+        {
+            ativarTab(button.dataset.tab);
+        });
     });
-  });
 
-  // aba padrão ao carregar
-  if (tabButtons.length > 0) {
-    ativarTab(tabButtons[0].dataset.tab);
-  }
+    // aba padrão ao carregar
+    if (tabButtons.length > 0) {
+        ativarTab(tabButtons[0].dataset.tab);
+    }
 </script>
 
 <?php require_once './pages/footer.php'; ?>
